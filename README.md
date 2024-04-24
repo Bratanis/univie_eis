@@ -1,5 +1,3 @@
-# Group 2
-s
 --- 
 title: PortalTechnologies
 imgUrl: https://freepngimg.com/thumb/portal/27619-7-portal-image.png
