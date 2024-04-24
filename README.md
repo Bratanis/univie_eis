@@ -1,6 +1,6 @@
 # Group 2
 
-```
+---
 title: PortalTechnologies
 imgUrl: https://freepngimg.com/thumb/portal/27619-7-portal-image.png
 imgURL_disclaimer: "Image from https://pixabay.com/vectors/icon-position-map-geolocation-4399704/, Free for commercial use, No attribution required."
@@ -10,7 +10,7 @@ affiliation: Dragomir Marinov, Klara Kolarova, Ivan Bratanov (University of Vien
 port: 9010
 private_url: http://eis.dke.univie.ac.at:9010/geocoder/
 public_url: https://eis.dke.univie.ac.at/geocoder/
-```
+---
 
 ## Getting started
 
