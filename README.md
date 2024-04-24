@@ -9,3 +9,5 @@ port: 9010
 private_url: http://eis.dke.univie.ac.at:9010/geocoder/
 public_url: https://eis.dke.univie.ac.at/geocoder/
 ---
+
+# Portal Technologies
