@@ -1,0 +1,61 @@
+stages:
+  - start
+  - build
+  - dockerize
+  - deploy
+  
+variables:
+  MAVEN_CLI_OPTS: "--batch-mode"
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
+  DOCKER_CONTAINER_NAME: "geocoder"
+  DOCKER_CONTAINER_PORT: "9010"
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+clean:
+  image: maven:3.8.1-openjdk-11
+  stage: start
+  script:
+    - mvn $MAVEN_CLI_OPTS -U clean
+
+purge_dependencies:
+  image: maven:3.8.1-openjdk-11
+  stage: start
+  script:
+    - mvn $MAVEN_CLI_OPTS dependency:purge-local-repository
+
+build:
+  image: maven:3.8.1-openjdk-11
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS install
+    
+  artifacts:
+    paths:
+    - target/*.war
+    expire_in: 1 week
+
+build_docker:
+  stage: dockerize
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD jenkins.dke.univie.ac.at:4567
+  script:
+    - docker pull $CI_REGISTRY_IMAGE:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:latest -f .docker/Dockerfile .
+    - docker push $CI_REGISTRY_IMAGE:latest
+
+deploy_docker:
+  stage: deploy
+  before_script:
+    - docker info
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD jenkins.dke.univie.ac.at:4567
+  script:
+    - docker stop $DOCKER_CONTAINER_NAME || true
+    - docker rm $DOCKER_CONTAINER_NAME || true
+    - docker run -d --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 $CI_REGISTRY_IMAGE:latest
+
+
