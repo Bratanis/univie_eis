@@ -5,7 +5,7 @@ imgURL_disclaimer: "Image from https://pixabay.com/vectors/icon-position-map-geo
 excepit: A geolocation service (online) to forward and reverse geocode location information as a proof-of-concept. Additional, a microservice that location codes based on grid and calculate closeness using a kd-tree algorithm.
 keywords: Geocoding, grid calculation, neigbour closeness
 affiliation: Dragomir Marinov, Klara Kolarova, Ivan Bratanov (University of Vienna)
-port: 9010
-private_url: http://eis.dke.univie.ac.at:9010/geocoder/
+port: 9012
+private_url: http://eis.dke.univie.ac.at:9012/geocoder/
 public_url: https://eis.dke.univie.ac.at/geocoder/
 ---
