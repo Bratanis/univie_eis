@@ -7,7 +7,7 @@ stages:
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
   MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository"
-  DOCKER_CONTAINER_NAME: "geocoder"
+  DOCKER_CONTAINER_NAME: "portal_service_java"
   DOCKER_CONTAINER_PORT: "9012"
 
 cache:
