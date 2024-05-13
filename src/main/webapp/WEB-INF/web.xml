@@ -3,13 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	version="3.1" >
+	version="3.1">
 	<servlet>
 		<servlet-name>Jersey WebService Container</servlet-name>
 		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 		<init-param>
 			<param-name>jersey.config.server.provider.packages</param-name>
-			<param-value>org.omilab.geocoder,io.swagger.jaxrs.listing
+			<param-value>org.omilab.dummy_service,io.swagger.jaxrs.listing, org.omilab.geocoder.service
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
@@ -24,11 +24,11 @@
 		</init-param>
 		<init-param>
 			<param-name>api.description</param-name>
-			<param-value>Collection of APIs for the static GeoCoder </param-value>
+			<param-value>Collection of APIs for the service </param-value>
 		</init-param>
 		<init-param>
 			<param-name>swagger.api.basepath</param-name>
-			<param-value>/geocoder/api</param-value>
+			<param-value>/portal_service/api</param-value>
 		</init-param>
 		
 		<load-on-startup>2</load-on-startup>
@@ -37,7 +37,4 @@
 		<servlet-name>Jersey WebService Container</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
-	<listener>
-		<listener-class>org.omilab.geocoder.GeoCoderStartupListener</listener-class>
-	 </listener>
 </web-app>

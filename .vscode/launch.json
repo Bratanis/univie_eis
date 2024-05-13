@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "DummyServiceTester",
+            "request": "launch",
+            "mainClass": "DummyServiceTester",
+            "projectName": "geocoder"
+        },
+        {
+            "type": "cppdbg",
+            "request": "launch",
+            "name": "Launch",
+            "program": "${workspaceFolder}/${fileBasename}",
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
