@@ -21,4 +21,5 @@ public class ExampleService {
     public String getGreeting(@PathParam("name") String name) {
         return "Hello " + name;
     }
+
 }

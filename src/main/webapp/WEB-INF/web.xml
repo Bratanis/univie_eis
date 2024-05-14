@@ -37,4 +37,5 @@
 		<servlet-name>Jersey WebService Container</servlet-name>
 		<url-pattern>/api/*</url-pattern>
 	</servlet-mapping>
+
 </web-app>
