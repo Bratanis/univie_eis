@@ -59,7 +59,7 @@ public class AttractionService {
                                       .collect(Collectors.toList());
                 }
 
-        return List.of("Attractions in district " + districts.getFirst(), "More attractions in district " + districts);
+        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
 
 
     }

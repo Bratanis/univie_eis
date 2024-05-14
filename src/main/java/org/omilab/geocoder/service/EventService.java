@@ -1,6 +1,8 @@
 package org.omilab.geocoder.service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -37,8 +39,17 @@ public class EventService {
     @GET
     @Path("/districts/{districts}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getEventsByDistricts(@PathParam("districts") List<Integer> districts) {
-        return List.of("Events in districts " + districts, "More events in districts " + districts);
+    public List<String> getEventsByDistricts(@PathParam("districts") String districtStr) {
+        
+                // Convert comma-separated String to List of Integers for districts
+                List<Integer> districts = null;
+                if (districtStr != null && !districtStr.isEmpty()) {
+                    districts = Arrays.stream(districtStr.split(","))
+                                      .map(Integer::parseInt)
+                                      .collect(Collectors.toList());
+                }
+
+        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
     }
 
 }
