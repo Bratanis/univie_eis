@@ -8,26 +8,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
 @Path("/attractions")
 public class AttractionService {
 
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getExample() {
-        return "This is a test attraction endpoint.";
-    }
-
-    @GET
-    @Path("/name/{name}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getAttractionByName(@PathParam("name") String name) {
-        return "Hello Attraction " + name;
-    }
 
     //returns all attractions in the database (as json)
     @GET
@@ -35,6 +21,13 @@ public class AttractionService {
     @Produces(MediaType.APPLICATION_JSON)
     public String getAllAttractions() {
         return "All attractions";
+    }
+
+    @GET
+    @Path("/name/{name}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String getAttractionByName(@PathParam("name") String name) {
+        return "Hello Attraction " + name;
     }
 
     //returns attraction by id
@@ -64,40 +57,6 @@ public class AttractionService {
 
     }
 
-
-    @GET
-    @Path("/spending")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response searchAttractions(
-            @QueryParam("districts") String districtStr, // Change to String
-            @QueryParam("order") String order,
-            @QueryParam("ageRange") String ageRangeStr, // Change to String
-            @QueryParam("gender") String gender) {
-
-        // Convert comma-separated String to List of Integers for districts
-        List<Integer> districts = null;
-        if (districtStr != null && !districtStr.isEmpty()) {
-            districts = Arrays.stream(districtStr.split(","))
-                              .map(Integer::parseInt)
-                              .collect(Collectors.toList());
-        }
-
-        // Convert comma-separated String to List of Integers for ageRange
-        List<Integer> ageRange = null;
-        if (ageRangeStr != null && !ageRangeStr.isEmpty()) {
-            ageRange = Arrays.stream(ageRangeStr.split(","))
-                             .map(Integer::parseInt)
-                             .collect(Collectors.toList());
-        }
-
-        StringBuilder sb = new StringBuilder("Attractions filtered by: \n");
-        if (districts != null) sb.append("Districts: ").append(districts).append("\n");
-        if (order != null) sb.append("Order: ").append(order).append("\n");
-        if (ageRange != null) sb.append("Age Range: ").append(ageRange).append("\n");
-        if (gender != null) sb.append("Gender: ").append(gender).append("\n");
-
-        return Response.ok(sb.toString()).build();
-    }
 }
 
 
