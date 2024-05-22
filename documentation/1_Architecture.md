@@ -2,45 +2,35 @@
 title: Architecture
 type: description
 ---
-A microservice architecture is used to realize the functionalities for geocoding.
+# Architecture Components
 
-#### Service Operations
+## 7.1 Backend
 
-As a case, geocoding has been selected. The operations provided allow for 
+### Spring Boot
 
-- forward geocoding (location name to coordinates, [Definition](https://www.techopedia.com/definition/12809/geocoding)), and 
-- reverse geocoding (coordinates to location name, [Definition](https://en.wikipedia.org/wiki/Reverse_geocoding)).
+The backend will be implemented in Java, and the Java Spring Boot framework will be used as it simplifies the setup of the application with minimal configurations and has some key features such as:
 
-For the online service, the API provided by [Nominatim](https://nominatim.org/) has been selected and wrapped within OLIVE (configuration available for [download](https://gitlab.dke.univie.ac.at/eis/2021s/group0/-/blob/master/msc_config/b3613704-a884-4c12-9cf0-574b5332a76f.json)).
+- **Spring Security:** For authentication and authorization mechanisms.
+- **RESTful Services:** Exposing endpoints for frontend interaction.
+- **Spring Data JPA:** For data access and ORM (Object-Relational Mapping) with the relational database, which we are planning to use.
 
+## 7.2 Relational Database
 
-For the offline case, a grid-based implementation is provided, that uses k-d-algorithms (inspired by [phishman3579/java-algorithms-implementation](https://github.com/phishman3579/java-algorithms-implementation/blob/master/src/com/jwetherell/algorithms/data_structures/KdTree.java)for closness determination and basic visualisation [download](https://gitlab.dke.univie.ac.at/eis/2021s/group0/-/blob/master/msc_config/7093b102-e1c9-4c7b-bb1d-6a0b824f7a5b.json)
+We will use a relational database (e.g., MySQL, PostgreSQL, etc.) to store and manage our data. A rough schema has already been outlined in this document to illustrate the database structure.
 
-##### Input:
+## 7.3 Frontend
 
-The input messages required are:
+The frontend will be built with the following structuring and design components:
 
-- forward geocoding (online): search string, in different formats
-- reverse geocoding (online): longitude and latitude as double
-- reverse geocoding (offline): grid size as an integer and search point as x and y in double format
+- HTML
+- CSS
+- Bootstrap
 
-##### Operations:
+As for rendering dynamic content and server-side processing, we will use:
 
-The following operations are provided for the online use, based on Nominamtims service capabilities.
+### Java Server Pages
 
-- geocode_online_freeform: free-search
-- geocode_online_city: search by city names
-- geocode_online_postalcode: search by ZIP code
-- geocode_online_country: search by country name
-- reverse_geocode_online: search by long/lat coordinates
+Java Server Pages (JSP) enables the development of server-side web applications with the ability to generate dynamic content based on user requests. It simplifies the creation of dynamic web pages through embedding Java code within HTML using tags. JSP was chosen as it is easy to implement and adapt quickly by every member of the team, ensuring that the workflow won’t be slowed down by learning a complex technology.
 
-##### Output:
-
-The output messages/results produced are:
-
-- forward geocoding (online): longitude and latitude value of the first found element (in case more nodes are found, these are disregarded, in JSON format)
-- reverse geocoding (online): location and display name as strings (in JSON format)
-- reverse geocoding (offline): closest nodes in grid based on a fixed radius of k=1, in JSON format
-- reverse geocoding (offline), display: a PNG, based64 encoded visualizing the search performed
 
 
