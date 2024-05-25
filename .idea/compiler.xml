@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="portal_service_java" />
+        <module name="portal_service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="portal_service_java" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
