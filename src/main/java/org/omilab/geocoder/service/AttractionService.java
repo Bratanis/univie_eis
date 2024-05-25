@@ -1,62 +1,51 @@
 package org.omilab.geocoder.service;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.MediaType;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-
-@Path("/attractions")
+@Controller
 public class AttractionService {
 
-
-    //returns all attractions in the database (as json)
-    @GET
-    @Path("/all")
-    @Produces(MediaType.APPLICATION_JSON)
+    // Returns all attractions in the database (as JSON)
+    @GetMapping(value = "/attractions/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAttractions() {
-        return "All attractions";
+        return "second";
     }
 
-    @GET
-    @Path("/name/{name}")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getAttractionByName(@PathParam("name") String name) {
+    // Returns attraction by name
+    @GetMapping(value = "/attractions/name/{name}", produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getAttractionByName(@PathVariable String name) {
         return "Hello Attraction " + name;
     }
 
-    //returns attraction by id
-    @GET
-    @Path("/id/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getAttractionById(@PathParam("id") String id) {
+    // Returns attraction by id
+    @GetMapping(value = "/attractions/id/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getAttractionById(@PathVariable String id) {
         return "Attraction with id " + id;
     }
 
-    //returns all attractions with specified district number(s) - parameter is a list of 0 to n district numbers
-    @GET
-    @Path("/districts/{districts}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getAttractionsByDistricts(@PathParam("districts") String districtStr) {
+    // Returns all attractions with specified district number(s) - parameter is a list of 0 to n district numbers
+    @GetMapping(value = "/attractions/districts/{districts}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<String> getAttractionsByDistricts(@PathVariable String districtStr) {
 
-                // Convert comma-separated String to List of Integers for districts
-                List<Integer> districts = null;
-                if (districtStr != null && !districtStr.isEmpty()) {
-                    districts = Arrays.stream(districtStr.split(","))
-                                      .map(Integer::parseInt)
-                                      .collect(Collectors.toList());
-                }
+        // Convert comma-separated String to List of Integers for districts
+        List<Integer> districts = null;
+        if (districtStr != null && !districtStr.isEmpty()) {
+            districts = Arrays.stream(districtStr.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+        }
 
-        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
-
-
+        return  null;
     }
-
 }
-
-
