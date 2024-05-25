@@ -18,6 +18,16 @@ public class AttractionService {
         return "second";
     }
 
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String get() {
+        return "index";
+    }
+
+    @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getTest() {
+        return "redirect:/test.html";
+    }
+
     // Returns attraction by name
     @GetMapping(value = "/attractions/name/{name}", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getAttractionByName(@PathVariable String name) {
