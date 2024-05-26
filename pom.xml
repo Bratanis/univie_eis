@@ -165,7 +165,7 @@
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
-						<contextPath>/portal_service_java</contextPath>
+						<contextPath>/portal_service</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
