@@ -10,6 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ChatBOT" target="1.8" />
       <module name="portal_service_java" target="1.8" />
     </bytecodeTargetLevel>
   </component>
