@@ -1,55 +1,44 @@
-//package org.omilab.geocoder.service;
-//
-//import java.util.Arrays;
-//import java.util.List;
-//import java.util.stream.Collectors;
-//
-//import javax.ws.rs.GET;
-//import javax.ws.rs.Path;
-//import javax.ws.rs.PathParam;
-//import javax.ws.rs.Produces;
-//import javax.ws.rs.core.MediaType;
-//
-//@Path("/events")
-//public class EventService {
-//
-//    @GET
-//    @Path("/name/{name}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String getEventByName(@PathParam("name") String name) {
-//        return "Returns Event with name: " + name;
-//    }
-//
-//    @GET
-//    @Path("/id/{id}")
-//    @Produces(MediaType.TEXT_PLAIN)
-//    public String getEventById(@PathParam("id") String id) {
-//        return "Returns Event with id: " + id;
-//    }
-//
-//    //returns all attractions in the database (as json)
-//    @GET
-//    @Path("/all")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public String getAllEvents() {
-//        return "Returns all events";
-//    }
-//
-//    //returns all attractions with specified district number(s) - parameter is a list of 0 to n district numbers
-//    @GET
-//    @Path("/districts/{districts}")
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public List<String> getEventsByDistricts(@PathParam("districts") String districtStr) {
-//
-//                // Convert comma-separated String to List of Integers for districts
-//                List<Integer> districts = null;
-//                if (districtStr != null && !districtStr.isEmpty()) {
-//                    districts = Arrays.stream(districtStr.split(","))
-//                                      .map(Integer::parseInt)
-//                                      .collect(Collectors.toList());
-//                }
-//
-//        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
-//    }
-//
-//}
+package org.omilab.portal_service.service;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/events")
+public class EventService {
+
+    @GetMapping("/name/{name}")
+    public String getEventByName(@PathVariable("name") String name) {
+        return "Returns Event with name: " + name;
+    }
+
+    @GetMapping("/id/{id}")
+    public String getEventById(@PathVariable("id") String id) {
+        return "Returns Event with id: " + id;
+    }
+
+    @GetMapping("/all")
+    public String getAllEvents() {
+        return "Returns all events";
+    }
+
+    @GetMapping("/districts/{districts}")
+    public List<String> getEventsByDistricts(@PathVariable("districts") String districtStr) {
+
+        // Convert comma-separated String to List of Integers for districts
+        List<Integer> districts = null;
+        if (districtStr != null && !districtStr.isEmpty()) {
+            districts = Arrays.stream(districtStr.split(","))
+                    .map(Integer::parseInt)
+                    .collect(Collectors.toList());
+        }
+
+        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
+    }
+}
