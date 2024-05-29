@@ -24,19 +24,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jetty</artifactId>
-			<version>3.3.0</version> <!-- Adjust version if needed -->
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -100,11 +88,11 @@
 			<scope>provided</scope>
 		</dependency>
 
-<!--		<dependency>-->
-<!--			<groupId>javax.servlet</groupId>-->
-<!--			<artifactId>jstl</artifactId>-->
-<!--			<version>1.2</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -170,17 +158,17 @@
 	<build>
 		<plugins>
 
-<!--			<plugin>-->
-<!--				<groupId>org.eclipse.jetty</groupId>-->
-<!--				<artifactId>jetty-maven-plugin</artifactId>-->
-<!--				<version>9.4.18.v20190429</version>-->
-<!--				<configuration>-->
-<!--					<scanIntervalSeconds>10</scanIntervalSeconds>-->
-<!--					<webApp>-->
-<!--						<contextPath>/portal_service</contextPath>-->
-<!--					</webApp>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.4.18.v20190429</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/portal_service</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
 			<!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -198,7 +186,7 @@
                 </executions>
             </plugin> -->
 			<!-- remove due to security issues, outdated -->
-			<plugin>
+			<!--<plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
@@ -207,7 +195,7 @@
                     <server>${tomcat-server-name}</server>
                     <path>/${project.build.finalName}</path>
                 </configuration>
-            </plugin>
+            </plugin>-->
 
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
