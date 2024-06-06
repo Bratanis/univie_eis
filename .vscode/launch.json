@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "PortalServiceApplication",
+            "request": "launch",
+            "mainClass": "org.omilab.portal_service.PortalServiceApplication",
+            "projectName": "portal_service"
+        },
+        {
+            "type": "java",
+            "name": "PortalServiceApplication",
+            "request": "launch",
+            "mainClass": "PortalServiceApplication",
+            "projectName": "portal_service"
+        },
+        {
+            "type": "java",
             "name": "DummyServiceTester",
             "request": "launch",
             "mainClass": "DummyServiceTester",
