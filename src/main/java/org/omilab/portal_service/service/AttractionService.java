@@ -1,5 +1,6 @@
 package org.omilab.portal_service.service;
 
+import org.omilab.portal_service.DatabaseConnection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,11 @@ public class AttractionService {
     // Returns all attractions in the database (as JSON)
     @GetMapping(value = "/attractions/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAttractions() {
+        System.out.println("Before Connection");
+        DatabaseConnection db = new DatabaseConnection();
+//        db.getUsers(db.connect());
+        db.showDatabases(db.connect());
+        System.out.println("After Connection");
         return "second";
     }
 
