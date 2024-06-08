@@ -1,32 +1,44 @@
 package org.omilab.portal_service.service;
 
+import com.google.gson.JsonObject;
 import org.omilab.portal_service.DatabaseConnection;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
 public class AttractionService {
+        //DatabaseConnection db = new DatabaseConnection();
 
     // Returns all attractions in the database (as JSON)
     @GetMapping(value = "/attractions/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAttractions() {
         System.out.println("Before Connection");
-        DatabaseConnection db = new DatabaseConnection();
 //        db.getUsers(db.connect());
-        db.showDatabases(db.connect());
+       // db.showDatabases(db.connect());
         System.out.println("After Connection");
         return "second";
     }
 
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     public String get() {
-        return "index";
+        return "redirect:/index.html";
+    }
+
+    @GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, String>> getEvents() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "some data");
+
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)

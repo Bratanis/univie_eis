@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vienna Tourism Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Vienna Tourism Portal</h1>
+    </header>
+    <div class="login-container">
+        <form action="login.php" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+    <div class="button-container">
+        <button onclick="location.href='ratings.html'">Ratings</button>
+        <button onclick="location.href='spendings.html'">Spending</button>
+        <button onclick="location.href='visitors.html'">Visitors</button>
+        <button onclick="location.href='times.html'">Time</button>
+    </div>
+
+    <div id="events-container" class="events-container">
+        <p>Log in to see the upcoming events in your district.</p>
+    </div>
+</div>
+<script>
+    // Check if the user is logged in and fetch events if so
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchEvents();
+    });
+
+    async function fetchEvents() {
+        const response = await fetch('fetch_events.php');
+        if (response.ok) {
+            const events = await response.json();
+            if (events.length > 0) {
+                displayEvents(events);
+            } else {
+                document.getElementById('events-container').innerHTML = '<p>No upcoming events.</p>';
+            }
+        } else {
+            document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
+        }
+    }
+
+    function displayEvents(events) {
+        const container = document.getElementById('events-container');
+        container.innerHTML = '<h2>Upcoming Events</h2>';
+        if (events.length > 0) {
+            const list = document.createElement('ul');
+            events.forEach(event => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${event.name} - ${event.date} (${event.type})`;
+                list.appendChild(listItem);
+            });
+            container.appendChild(list);
+        } else {
+            container.innerHTML += '<p>No upcoming events.</p>';
+        }
+    }
+</script>
+</body>
+</html>

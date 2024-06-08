@@ -50,7 +50,7 @@ public class DatabaseConnection {
     public void getUsers(Connection con){
         Connection connection = con;
 
-        String sql = "SELECT * FROM my_db.users";
+        String sql = "SELECT * FROM portal_database.events ";
 
         try {
             // Create a PreparedStatement object with the SQL statement
