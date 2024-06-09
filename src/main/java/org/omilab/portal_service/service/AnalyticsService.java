@@ -48,7 +48,11 @@ public class AnalyticsService {
             sql.append(" AND Age BETWEEN ? AND ?");
         }
         if (gender != null && !gender.isEmpty()) {
-            sql.append(" AND Gender = ?");
+            if (gender.equals("diverse")) {
+                sql.append(" AND Gender NOT IN ('Male', 'Female')");
+            } else {
+                sql.append(" AND Gender = ?");
+            }
         }
         if (yearStart != null && yearEnd != null) {
             sql.append(" AND YEAR(VisitTime) BETWEEN ? AND ?");
@@ -62,7 +66,7 @@ public class AnalyticsService {
                 stmt.setInt(paramIndex++, ageMin);
                 stmt.setInt(paramIndex++, ageMax);
             }
-            if (gender != null && !gender.isEmpty()) {
+            if (gender != null && !gender.isEmpty() && !gender.equals("diverse")) {
                 stmt.setString(paramIndex++, gender);
             }
             if (yearStart != null && yearEnd != null) {
