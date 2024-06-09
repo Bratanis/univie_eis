@@ -188,3 +188,12 @@ button:hover {
     background-color: #fff; /* Background to ensure visibility */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+#chartContainer2 {
+    height: 600px; /* Ensuring the chart has enough space to render */
+    width: 100%; /* Take full width of its container */
+    margin: 0 auto 30px; /* Proper margin to avoid clashing with other elements */
+    border: 1px solid #ccc; /* To visually confirm the container's dimensions */
+    background-color: #fff; /* Background to ensure visibility */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

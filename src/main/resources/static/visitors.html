@@ -26,6 +26,7 @@
 
    <!-- First Chart Container -->
    <div id="chartContainer1"></div>
+   <div id="chartContainer2"></div>
 
    <script>
     function updateChart() {
@@ -43,7 +44,7 @@
         .then(data => {
             displayData(data);
             renderGenderChart(data);
-            //renderAgeChart(data);
+            renderAgeChart(data);
         })
         .catch(error => {
             console.error('Error fetching visitor reviews:', error);
@@ -61,7 +62,7 @@
             });
         }
 
-        function renderGenderChart(data) {
+    function renderGenderChart(data) {
     const genderCounts = {
         "Male": 0,
         "Female": 0,
@@ -90,12 +91,67 @@
         { y: (genderCounts["Diverse"] / totalCount * 100), label: "Diverse" }
     ];
 
-    console.log('Data Points:', dataPoints); // Debugging output
+    console.log('Gender Data Points:', dataPoints); // Debugging output
 
     const chart = new CanvasJS.Chart("chartContainer1", {
         animationEnabled: true,
         title: {
             text: "Gender Distribution"
+        },
+        data: [{
+            type: "pie",
+            startAngle: 240,
+            yValueFormatString: "##0.00\"%\"", // Ensure the format includes only two decimal places followed by '%'
+            indexLabel: "{label}: {y}%", // Display label and percentage on the chart
+            dataPoints: dataPoints
+        }]
+    });
+    chart.render();
+}
+
+function renderAgeChart(data) {
+    const genderCounts = {
+        "Children": 0,
+        "Young Adults": 0,
+        "Adults": 0,
+        "Older Adults": 0,
+        "Seniors": 0
+    };
+
+    data.forEach(datapoint => {
+        if (datapoint.age) {
+            if (datapoint.age < 18) {
+                genderCounts["Children"]++;
+            } else if (datapoint.age < 35) {
+                genderCounts["Young Adults"]++;
+            } else if (datapoint.age < 52) {
+                genderCounts["Adults"]++;
+            } else if (datapoint.age < 69) {
+                genderCounts["Older Adults"]++;
+            } else {
+                genderCounts["Seniors"]++;
+            }
+        }
+    });
+
+    // Calculate total counts to determine percentages
+    const totalCount = genderCounts["Children"] + genderCounts["Young Adults"] + genderCounts["Adults"] + genderCounts["Older Adults"] + genderCounts["Seniors"];
+
+    // Map counts to percentages
+    const dataPoints = [
+        { y: (genderCounts["Children"] / totalCount * 100), label: "Children" },
+        { y: (genderCounts["Young Adults"] / totalCount * 100), label: "Young Adults" },
+        { y: (genderCounts["Adults"] / totalCount * 100), label: "Adults" },
+        { y: (genderCounts["Older Adults"] / totalCount * 100), label: "Older Adults" },
+        { y: (genderCounts["Seniors"] / totalCount * 100), label: "Seniors" }
+    ];
+
+    console.log('Age Data Points:', dataPoints); // Debugging output
+
+    const chart = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        title: {
+            text: "Age Distribution"
         },
         data: [{
             type: "pie",
