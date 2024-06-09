@@ -20,58 +20,71 @@
         
             <button type="submit">Login</button>
         </form>
-        <script>
-            function performLogin() {
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-            
-                // Simple pattern check to match user1, user2,..., userN and pass1, pass2,..., passN
-                const userMatch = username.match(/^user(\d+)$/);
-                const passMatch = password.match(/^pass(\d+)$/);
-            
-                // Check if both matches are found and their numerical suffixes match
-                if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
-                    // Redirect to a new URL with the user parameter, or potentially adjust application state
-                    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?user=${userMatch[1]}`;
-                    window.history.pushState({ path: newUrl }, '', newUrl);
-        
-                    fetchEvents(); // Call fetchEvents to load data based on new user parameter
-                    return false; // Prevent form submission
-                } else {
-                    alert("Invalid credentials. Please try again.");
-                    return false; // Prevent form submission
-                }
-            }
-            </script>
-                    
     </div>
     <div class="button-container">
-        <button onclick="location.href='ratings.html'">Ratings</button>
-        <button onclick="location.href='spendings.html'">Spending</button>
-        <button onclick="location.href='visitors.html'">Visitors</button>
-        <button onclick="location.href='times.html'">Time</button>
+        <button id="ratingsButton">Ratings</button>
+        <button id="spendingsButton">Spending</button>
+        <button id="visitorsButton">Visitors</button>
+        <button id="timesButton">Time</button>
     </div>
 
     <div id="events-container" class="events-container">
         <p>Log in to see the upcoming events in your district.</p>
     </div>
-</div>
-<script>
-    // Check if the user is logged in and fetch events if so
+
+    <script>
     document.addEventListener('DOMContentLoaded', function() {
+        setupRedirectionButtons();
         fetchEvents();
     });
-    
+
+    function performLogin() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const userMatch = username.match(/^user(\d+)$/);
+        const passMatch = password.match(/^pass(\d+)$/);
+
+        if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
+            const newUrl = `${window.location.pathname}?user=${userMatch[1]}`;
+            window.history.pushState({ path: newUrl }, '', newUrl);
+            fetchEvents();
+            return false;
+        } else {
+            alert("Invalid credentials. Please try again.");
+            return false;
+        }
+    }
+
+    function setupRedirectionButtons() {
+        const buttons = document.querySelectorAll('.button-container button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const page = this.id.replace('Button', '');
+                redirectToPage(page);
+            });
+        });
+    }
+
+    function redirectToPage(page) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get('user');
+        if (user) {
+            window.location.href = `${page}.html?user=${user}`;
+        } else {
+            window.location.href = `${page}.html`;
+        }
+    }
+
     async function fetchEvents() {
         const urlParams = new URLSearchParams(window.location.search);
-        const user = urlParams.get('user'); // Get user number from URL
-    
+        const user = urlParams.get('user');
+
         if (!user) {
             document.getElementById('events-container').innerHTML = '<p>Please log in to see the upcoming events in your district.</p>';
             return;
         }
-    
-        const response = await fetch(`/portal_service/api/events/by-district?districtNr=${user}`); // Fetch events for the specified district
+
+        const response = await fetch(`/portal_service/api/events/by-district?districtNr=${user}`);
         if (response.ok) {
             const events = await response.json();
             displayEvents(events);
@@ -79,7 +92,7 @@
             document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
         }
     }
-    
+
     function displayEvents(events) {
         const container = document.getElementById('events-container');
         container.innerHTML = '<h2>Upcoming Events</h2>';
@@ -95,6 +108,6 @@
             container.innerHTML += '<p>No upcoming events.</p>';
         }
     }
-    </script>    
+    </script>
 </body>
 </html>
