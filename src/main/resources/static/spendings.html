@@ -87,7 +87,7 @@
                 const date = new Date(spending.visitTime);
                 const formattedDate = date.toLocaleDateString(); 
                 const item = document.createElement('li');
-                item.textContent = `Name: ${spending.attractionName}, Date: ${formattedDate}, Gender: ${spending.gender}, Age: ${spending.age}, Amount: ${spending.amount}`;
+                item.textContent = `Name: ${spending.attractionName}, Date: ${formattedDate}, Gender: ${spending.gender}, Age: ${spending.age}, Amount: ${spending.moneySpent}`;
                 list.appendChild(item);
             });
         }
@@ -102,12 +102,12 @@
                 const year = new Date(spending.visitTime).getFullYear();
                 const index = year - yearStart;
                 if (index >= 0 && index < yearsRange) {
-                    spendings[index] += spending.amount;
+                    spendings[index] += spending.moneySpent;
                 }
             });
 
             const dataPoints = spendings.map((amount, index) => ({
-                x: parseInt(yearStart) + index,
+                x: (parseInt(yearStart) + index)*1000 ,
                 y: amount
             }));
 

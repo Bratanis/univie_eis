@@ -7,14 +7,16 @@ public class SpendingData {
     private int districtNr;
     private String attractionName;
     private double moneySpent;
+    private java.sql.Timestamp visitTime;
 
     // Constructor
-    public SpendingData( int age, String attractionName, String gender, int districtNr, double moneySpent) {
+    public SpendingData( int age, String attractionName, String gender, int districtNr, double moneySpent, java.sql.Timestamp visitTime) {
         this.age = age;
         this.attractionName = attractionName;
         this.gender = gender;
         this.districtNr = districtNr;
         this.moneySpent = moneySpent;
+        this.visitTime = visitTime;
     }
 
     public String getGender() {
@@ -55,6 +57,14 @@ public class SpendingData {
 
     public void setMoneySpent(double moneySpent) {
         this.moneySpent = moneySpent;
+    }
+
+    public java.sql.Timestamp getVisitTime() {
+        return visitTime;
+    }
+
+    public void setVisitTime(java.sql.Timestamp visitTime) {
+        this.visitTime = visitTime;
     }
 
 }

@@ -39,7 +39,7 @@ public class SpendingsService {
     
         
         List<SpendingData> spendings = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT age, name, gender, districtNr, moneySpent FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT age, name, gender, districtNr, moneySpent, visitTime FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
 
         // Dynamically append conditions based on provided parameters
         if (ageMin != null && ageMax != null) {
@@ -86,7 +86,8 @@ public class SpendingsService {
                     rs.getString("Name"),
                     rs.getString("Gender"),
                     rs.getInt("DistrictNr"),
-                    rs.getInt("MoneySpent")
+                    rs.getInt("MoneySpent"),
+                    rs.getTimestamp("VisitTime")
 
                 ));
             }
