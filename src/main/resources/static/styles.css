@@ -169,3 +169,22 @@ button:hover {
 .login-container button:hover {
     background-color: #9E6F50;
 }
+
+#dataDisplay {
+    height: 150px; /* Limiting height */
+    overflow-y: auto; /* Making it scrollable */
+    background-color: #fff; /* Ensuring it's visible against potentially conflicting backgrounds */
+    padding: 10px;
+    margin-bottom: 20px; /* Space between data display and chart */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#chartContainer1 {
+    height: 600px; /* Ensuring the chart has enough space to render */
+    width: 100%; /* Take full width of its container */
+    margin: 0 auto 30px; /* Proper margin to avoid clashing with other elements */
+    border: 1px solid #ccc; /* To visually confirm the container's dimensions */
+    background-color: #fff; /* Background to ensure visibility */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
