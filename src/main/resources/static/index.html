@@ -11,15 +11,39 @@
         <h1>Vienna Tourism Portal</h1>
     </header>
     <div class="login-container">
-        <form action="login.php" method="POST">
+        <form onsubmit="return performLogin()">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
-
+        
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
-
+        
             <button type="submit">Login</button>
         </form>
+        <script>
+            function performLogin() {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+            
+                // Simple pattern check to match user1, user2,..., userN and pass1, pass2,..., passN
+                const userMatch = username.match(/^user(\d+)$/);
+                const passMatch = password.match(/^pass(\d+)$/);
+            
+                // Check if both matches are found and their numerical suffixes match
+                if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
+                    // Redirect to a new URL with the user parameter, or potentially adjust application state
+                    const newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?user=${userMatch[1]}`;
+                    window.history.pushState({ path: newUrl }, '', newUrl);
+        
+                    fetchEvents(); // Call fetchEvents to load data based on new user parameter
+                    return false; // Prevent form submission
+                } else {
+                    alert("Invalid credentials. Please try again.");
+                    return false; // Prevent form submission
+                }
+            }
+            </script>
+                    
     </div>
     <div class="button-container">
         <button onclick="location.href='ratings.html'">Ratings</button>
@@ -37,17 +61,25 @@
     document.addEventListener('DOMContentLoaded', function() {
         fetchEvents();
     });
-
+    
     async function fetchEvents() {
-    const response = await fetch('/portal_service/api/events/all'); // Change this to your Spring controller's endpoint
-    if (response.ok) {
-        const events = await response.json();
-        displayEvents(events);
-    } else {
-        document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
+        const urlParams = new URLSearchParams(window.location.search);
+        const user = urlParams.get('user'); // Get user number from URL
+    
+        if (!user) {
+            document.getElementById('events-container').innerHTML = '<p>Please log in to see the upcoming events in your district.</p>';
+            return;
+        }
+    
+        const response = await fetch(`/portal_service/api/events/by-district?districtNr=${user}`); // Fetch events for the specified district
+        if (response.ok) {
+            const events = await response.json();
+            displayEvents(events);
+        } else {
+            document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
+        }
     }
-}
-
+    
     function displayEvents(events) {
         const container = document.getElementById('events-container');
         container.innerHTML = '<h2>Upcoming Events</h2>';
@@ -63,6 +95,6 @@
             container.innerHTML += '<p>No upcoming events.</p>';
         }
     }
-</script>
+    </script>    
 </body>
 </html>

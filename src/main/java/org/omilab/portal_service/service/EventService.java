@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,15 +28,16 @@ public class EventService {
     private static final Logger logger = LoggerFactory.getLogger(EventService.class);
     private DatabaseConnection dbConnection = new DatabaseConnection();
 
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getEvents() {
+    @GetMapping(value = "/by-district", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getEventsByDistrict(@RequestParam("districtNr") int districtNr) {
         List<Event> events = new ArrayList<>();
-        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event";
-    
+        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event WHERE districtNr = ?";
+
         try (Connection conn = dbConnection.connect();
-             PreparedStatement stmt = conn.prepareStatement(sql);
-             ResultSet rs = stmt.executeQuery()) {
-    
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, districtNr);
+            ResultSet rs = stmt.executeQuery();
+
             while (rs.next()) {
                 events.add(new Event(
                     rs.getString("name"),
@@ -49,13 +51,14 @@ public class EventService {
             logger.error("Failed to fetch events", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching events: " + e.getMessage());
         }
-    
+
         if (events.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-    
+
         return ResponseEntity.ok(events);
     }
+
 
     /* 
 
