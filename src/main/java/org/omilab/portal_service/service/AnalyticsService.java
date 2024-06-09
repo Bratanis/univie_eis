@@ -34,14 +34,15 @@ public class AnalyticsService {
         @RequestParam(required = false) Integer ageMax,
         @RequestParam(required = false) String gender,
         @RequestParam(required = false) Integer yearStart,
-        @RequestParam(required = false) Integer yearEnd) {
+        @RequestParam(required = false) Integer yearEnd,
+        @RequestParam(required = false) Integer districtNr) {
 
-        logger.info("API call with ageMin: {}, ageMax: {}, gender: '{}', yearStart: {}, yearEnd: {}",
-            ageMin, ageMax, gender, yearStart, yearEnd);
+        logger.info("API call with ageMin: {}, ageMax: {}, gender: '{}', yearStart: {}, yearEnd: {}, districtNr: {}",
+            ageMin, ageMax, gender, yearStart, yearEnd, districtNr);
     
         
         List<ReviewAnalytics> reviews = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT rating, age, gender, visitTime FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID WHERE 1=1");
+        StringBuilder sql = new StringBuilder("SELECT rating, age, gender, visitTime, districtNr, name FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
 
         // Dynamically append conditions based on provided parameters
         if (ageMin != null && ageMax != null) {
@@ -56,6 +57,10 @@ public class AnalyticsService {
         }
         if (yearStart != null && yearEnd != null) {
             sql.append(" AND YEAR(VisitTime) BETWEEN ? AND ?");
+        }
+
+        if (districtNr != null) {
+            sql.append(" AND DistrictNr = ?");
         }
 
         try (Connection conn = dbConnection.connect();
@@ -73,6 +78,9 @@ public class AnalyticsService {
                 stmt.setInt(paramIndex++, yearStart);
                 stmt.setInt(paramIndex++, yearEnd);
             }
+            if (districtNr != null) {
+                stmt.setInt(paramIndex++, districtNr);
+            }
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -81,7 +89,9 @@ public class AnalyticsService {
                     rs.getInt("Rating"),
                     rs.getTimestamp("VisitTime"),
                     rs.getString("Gender"),
-                    rs.getInt("Age")
+                    rs.getInt("Age"),
+                    rs.getInt("DistrictNr"),
+                    rs.getString("Name")
                 ));
             }
         } catch (Exception e) {

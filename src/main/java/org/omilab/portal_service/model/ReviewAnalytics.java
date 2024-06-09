@@ -5,13 +5,17 @@ public class ReviewAnalytics {
     private java.sql.Timestamp visitTime;
     private String gender;
     private int age;
+    private int districtNr;
+    private String attractionName;
 
     // Constructor
-    public ReviewAnalytics(int rating, java.sql.Timestamp visitTime, String gender, int age) {
+    public ReviewAnalytics(int rating, java.sql.Timestamp visitTime, String gender, int age, int districtNr, String attractionName) {
         this.rating = rating;
         this.visitTime = visitTime;
         this.gender = gender;
         this.age = age;
+        this.districtNr = districtNr;
+        this.attractionName = attractionName;
     }
 
     // Getters and Setters
@@ -47,6 +51,22 @@ public class ReviewAnalytics {
         this.age = age;
     }
 
+    public int getDistrictNr() {
+        return districtNr;
+    }
+
+    public void setDistrictNr(int districtNr) {
+        this.districtNr = districtNr;
+    }
+
+    public String getAttractionName() {
+        return attractionName;
+    }
+
+    public void setAttractionName(String attractionName) {
+        this.attractionName = attractionName;
+    }
+
     // Optionally, toString method for debugging
     @Override
     public String toString() {
@@ -55,6 +75,8 @@ public class ReviewAnalytics {
                ", visitTime=" + visitTime +
                ", gender='" + gender + '\'' +
                ", age=" + age +
+                ", districtNr=" + districtNr +
+                ", attractionName='" + attractionName + '\'' +
                '}';
     }
 }

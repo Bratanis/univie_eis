@@ -95,7 +95,7 @@
 
     function displayEvents(events) {
         const container = document.getElementById('events-container');
-        container.innerHTML = '<h2>Upcoming Events</h2>';
+        container.innerHTML = '<h2>Events in your district</h2>';
         if (events.length > 0) {
             const list = document.createElement('ul');
             events.forEach(event => {

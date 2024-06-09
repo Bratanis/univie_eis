@@ -41,11 +41,6 @@
         </form>
     </div>
 
-    <div id="dataDisplay" style="margin-top: 20px;">
-        <h2>Review Data:</h2>
-        <ul id="reviewList"></ul>
-    </div>
-
     <div id="chartContainer1"></div>
 
     <script>
@@ -55,13 +50,16 @@
             const gender = document.getElementById('gender').value;
             const yearStart = document.getElementById('yearStart').value;
             const yearEnd = document.getElementById('yearEnd').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const districtNr = urlParams.get('user');
 
             fetch(`/portal_service/api/analytics/visitor-reviews?` + new URLSearchParams({
                 ageMin: ageMin,
                 ageMax: ageMax,
                 gender: gender,
                 yearStart: yearStart,
-                yearEnd: yearEnd
+                yearEnd: yearEnd,
+                districtNr: districtNr
             }))
             .then(response => response.json())
             .then(data => {
@@ -78,8 +76,10 @@
             const list = document.getElementById('reviewList');
             list.innerHTML = '';
             data.forEach(review => {
+                const date = new Date(review.visitTime);
+                const formattedDate = date.toLocaleDateString(); 
                 const item = document.createElement('li');
-                item.textContent = `Rating: ${review.rating}, Date: ${review.visitTime}, Gender: ${review.gender}, Age: ${review.age}`;
+                item.textContent = `Name: ${review.attractionName}, Rating: ${review.rating}, Date: ${formattedDate}, District: ${review.districtNr}, Gender: ${review.gender}, Age: ${review.age}`;
                 list.appendChild(item);
             });
         }
@@ -126,5 +126,9 @@
             chart.render();
         }
     </script>
+    <div id="dataDisplay" style="margin-top: 10px;">
+        <h2>Review Data details:</h2>
+         <ul id="reviewList"></ul>
+     </div>
 </body>
 </html>
