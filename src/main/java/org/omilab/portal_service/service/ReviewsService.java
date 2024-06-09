@@ -23,9 +23,9 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/analytics")
-public class AnalyticsService {
+public class ReviewsService {
 
-    private static final Logger logger = LoggerFactory.getLogger(AnalyticsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReviewsService.class);
     private DatabaseConnection dbConnection = new DatabaseConnection();
 
     @GetMapping(value = "/visitor-reviews", produces = MediaType.APPLICATION_JSON_VALUE)
