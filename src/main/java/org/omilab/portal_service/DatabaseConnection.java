@@ -47,6 +47,7 @@ public class DatabaseConnection {
         }
     }
 
+    /*
     public void getUsers(Connection con){
         Connection connection = con;
 
@@ -72,5 +73,6 @@ public class DatabaseConnection {
             // Handle any potential SQLException
         }
     }
+    */
 }
 
