@@ -39,18 +39,14 @@
     });
 
     async function fetchEvents() {
-        const response = await fetch('fetch_events.php');
-        if (response.ok) {
-            const events = await response.json();
-            if (events.length > 0) {
-                displayEvents(events);
-            } else {
-                document.getElementById('events-container').innerHTML = '<p>No upcoming events.</p>';
-            }
-        } else {
-            document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
-        }
+    const response = await fetch('/portal_service/api/events/all'); // Change this to your Spring controller's endpoint
+    if (response.ok) {
+        const events = await response.json();
+        displayEvents(events);
+    } else {
+        document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
     }
+}
 
     function displayEvents(events) {
         const container = document.getElementById('events-container');

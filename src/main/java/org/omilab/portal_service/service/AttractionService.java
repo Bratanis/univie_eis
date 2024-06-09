@@ -1,5 +1,5 @@
 package org.omilab.portal_service.service;
-
+/* 
 import com.google.gson.JsonObject;
 import org.omilab.portal_service.DatabaseConnection;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 @Controller
 public class AttractionService {
         //DatabaseConnection db = new DatabaseConnection();
@@ -33,6 +32,7 @@ public class AttractionService {
         return "redirect:/index.html";
     }
 
+    
     @GetMapping(value = "/events", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, String>> getEvents() {
         Map<String, String> response = new HashMap<>();
@@ -40,6 +40,7 @@ public class AttractionService {
 
         return ResponseEntity.ok(response);
     }
+    
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTest() {
@@ -73,3 +74,4 @@ public class AttractionService {
         return  null;
     }
 }
+*/
