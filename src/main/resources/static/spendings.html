@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Spendings Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Customer Spendings Analysis</h1>
+    </header>
+
+    <div class="filters-container">
+        <form id="filterForm">
+            <div class="filter-block">
+                <h2>Age Range</h2>
+                <label for="ageMin">Min Age:</label>
+                <input type="number" id="ageMin" name="ageMin" min="0">
+                <label for="ageMax">Max Age:</label>
+                <input type="number" id="ageMax" name="ageMax">
+            </div>
+            <div class="filter-block">
+                <h2>Gender</h2>
+                <select id="gender" name="gender">
+                    <option value="">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="diverse">Diverse</option>
+                </select>
+            </div>
+            <div class="filter-block">
+                <h2>Time Frame</h2>
+                <label for="yearStart">Start Year:</label>
+                <input type="number" id="yearStart" name="yearStart" min="2000" max="2099">
+                <label for="yearEnd">End Year:</label>
+                <input type="number" id="yearEnd" name="yearEnd" min="2000" max="2099">
+            </div>
+            <button type="button" onclick="updateChart()">Generate</button>
+        </form>
+    </div>
+
+    <div id="chartContainer1"></div>
+
+    <script>
+        function updateChart() {
+            const ageMin = document.getElementById('ageMin').value;
+            const ageMax = document.getElementById('ageMax').value;
+            const gender = document.getElementById('gender').value;
+            const yearStart = parseInt(document.getElementById('yearStart').value);
+            const yearEnd = parseInt(document.getElementById('yearEnd').value);
+            const urlParams = new URLSearchParams(window.location.search);
+            const districtNr = urlParams.get('user');
+
+            console.log("Start" + yearStart + "End" + yearEnd);
+
+
+            if (yearEnd <= yearStart) {
+            alert("End year must be greater than start year.");
+            return;  // Exit function if the range is invalid
+            }
+
+            fetch(`/portal_service/api/analytics/visitor-spendings?` + new URLSearchParams({
+                ageMin: ageMin,
+                ageMax: ageMax,
+                gender: gender,
+                yearStart: yearStart,
+                yearEnd: yearEnd,
+                districtNr: districtNr
+            }))
+            .then(response => response.json())
+            .then(data => {
+                displayData(data);
+                renderChart(data, yearStart, yearEnd);
+            })
+            .catch(error => {
+                console.error('Error fetching visitor spendings:', error);
+                document.getElementById('spendingsList').innerHTML = `<li>Error loading data: ${error.message}</li>`;
+            });
+        }
+
+        function displayData(data) {
+            const list = document.getElementById('spendingsList');
+            list.innerHTML = '';
+            data.forEach(spending => {
+                const date = new Date(spending.visitTime);
+                const formattedDate = date.toLocaleDateString(); 
+                const item = document.createElement('li');
+                item.textContent = `Name: ${spending.attractionName}, Date: ${formattedDate}, Gender: ${spending.gender}, Age: ${spending.age}, Amount: ${spending.moneySpent}`;
+                list.appendChild(item);
+            });
+        }
+
+        function renderChart(data, yearStart, yearEnd) {
+            console.log("Start" + yearStart + "End" + yearEnd);
+            const yearsRange = yearEnd - yearStart + 1;
+            console.log("Years Range" + yearsRange);
+            const spendings = new Array(yearsRange).fill(0);
+
+            data.forEach(spending => {
+                const year = new Date(spending.visitTime).getFullYear();
+                const index = year - yearStart;
+                if (index >= 0 && index < yearsRange) {
+                    spendings[index] += spending.moneySpent;
+                }
+            });
+
+            const dataPoints = spendings.map((amount, index) => ({
+                x: new Date((parseInt(yearStart) + index), 0) ,
+                y: amount
+            }));
+
+            const chart = new CanvasJS.Chart("chartContainer1", {
+                animationEnabled: true,
+                title: {
+                    text: "Spendings Development"
+                },
+                axisY: {
+                    title: "Spendings in €",
+                    includeZero: true
+                },
+                axisX: {
+                    title: "Year",
+                    includeZero: true
+                },
+                data: [{
+                    type: "spline",
+                    xValueFormatString: "YYYY",
+                    dataPoints: dataPoints
+                }]
+            });
+
+            chart.render();
+        }
+    </script>
+    <div id="dataDisplay" style="margin-top: 10px;">
+        <h2>Review Data details:</h2>
+         <ul id="spendingsList"></ul>
+     </div>
+</body>
+</html>

@@ -22,7 +22,6 @@ public class DatabaseConnection {
     }
 
     public void showDatabases(Connection con){
-        Connection connection = con;
 
         String sql = "SHOW DATABASES";
 
@@ -36,32 +35,6 @@ public class DatabaseConnection {
             // Process the retrieved data
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("Database"));
-            }
-
-            // Close the ResultSet and PreparedStatement
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle any potential SQLException
-        }
-    }
-
-    public void getUsers(Connection con){
-        Connection connection = con;
-
-        String sql = "SELECT * FROM my_db.users";
-
-        try {
-            // Create a PreparedStatement object with the SQL statement
-            PreparedStatement preparedStatement = con.prepareStatement(sql);
-
-            // Execute the PreparedStatement to retrieve the results
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Process the retrieved data
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("username") + " " + resultSet.getString("email"));
             }
 
             // Close the ResultSet and PreparedStatement
