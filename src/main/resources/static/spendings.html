@@ -107,7 +107,7 @@
             });
 
             const dataPoints = spendings.map((amount, index) => ({
-                x: (parseInt(yearStart) + index)*1000 ,
+                x: new Date((parseInt(yearStart) + index), 0) ,
                 y: amount
             }));
 
@@ -116,15 +116,17 @@
                 title: {
                     text: "Spendings Development"
                 },
-                axisX: {
-                    title: "Year"
-                },
                 axisY: {
                     title: "Spendings in €",
                     includeZero: true
                 },
+                axisX: {
+                    title: "Year",
+                    includeZero: true
+                },
                 data: [{
                     type: "spline",
+                    xValueFormatString: "YYYY",
                     dataPoints: dataPoints
                 }]
             });
