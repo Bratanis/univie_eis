@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Ratings Analysis</title>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Top Visiting Times Analysis</h1>
+    </header>
+    <div class="filters-container">
+        <form id="filterForm">
+            <!-- Age Range Selector -->
+            <div class="filter-block">
+                <h2>Age Range</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="children" name="ageRange" value="children">
+                    <label for="children">Children</label>
+                    <input type="checkbox" id="youngAdults" name="ageRange" value="youngAdults">
+                    <label for="youngAdults">Young Adults</label>
+                    <input type="checkbox" id="middleAged" name="ageRange" value="middleAged">
+                    <label for="middleAged">Middle Aged</label>
+                    <input type="checkbox" id="elderly" name="ageRange" value="elderly">
+                    <label for="elderly">Elderly</label>
+                </div>
+            </div>
+
+            <!-- Gender Selector -->
+            <div class="filter-block">
+                <h2>Gender</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="checkbox" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                    <input type="checkbox" id="diverse" name="gender" value="diverse">
+                    <label for="diverse">Diverse</label>
+                </div>
+            </div>
+
+            <!-- Time Frame Selector -->
+            <div class="filter-block">
+                <h2>Time Frame</h2>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="year2021" name="timeFrame" value="2021">
+                    <label for="year2021">2021</label>
+                    <input type="checkbox" id="year2022" name="timeFrame" value="2022">
+                    <label for="year2022">2022</label>
+                    <input type="checkbox" id="year2023" name="timeFrame" value="2023">
+                    <label for="year2023">2023</label>
+                    <input type="checkbox" id="year2024" name="timeFrame" value="2024">
+                    <label for="year2024">2024</label>
+                </div>
+            </div>
+
+
+            <!-- Submit Button -->
+            <button type="button" onclick="updateChart()">Generate</button>
+        </fieldset>
+    </form>
+</div>
+    <!-- First Chart Container -->
+    <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+
+    <!-- Second Chart Container -->
+    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
+     
+     
+    <script>
+     function updateChart() {
+ // Chart for the first container
+ var chart1 = new CanvasJS.Chart("chartContainer1", {
+     animationEnabled: true,
+     title: {
+         text: "Customer Reviews"
+     },
+     data: [{
+         type: "stackedBar100",
+         toolTipContent: "{label}<br><b>{name}:</b> {y} (#percent%)",
+         showInLegend: true,
+         name: "April",
+         dataPoints: [
+             { y: 600, label: "Attraction1" },
+             { y: 400, label: "Attraction2" },
+             { y: 120, label: "Attraction3" }
+         ]
+     }]
+ });
+ chart1.render();
+ 
+ // Chart for the second container
+ var chart2 = new CanvasJS.Chart("chartContainer2", {
+     animationEnabled: true,
+     title: {
+         text: "Desktop Search Engine Market Share - 2016"
+     },
+     data: [{
+         type: "pie",
+         startAngle: 240,
+         yValueFormatString: "##0.00\"%\"",
+         indexLabel: "{label} {y}",
+         dataPoints: [
+             { y: 79.45, label: "Google" },
+             { y: 7.31, label: "Bing" },
+             { y: 7.06, label: "Baidu" },
+             { y: 4.91, label: "Yahoo" },
+             { y: 1.26, label: "Others" }
+         ]
+     }]
+ });
+ chart2.render();
+ }
+ </script>
+ 
+</body>
+</html>
