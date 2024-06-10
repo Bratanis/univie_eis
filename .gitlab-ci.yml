@@ -50,7 +50,7 @@ build:
     
   artifacts:
     paths:
-    - target/*.jar
+    - target/*.war
     expire_in: 1 week
 
 build_docker:
