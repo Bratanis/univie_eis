@@ -43,6 +43,7 @@
         const password = document.getElementById('password').value;
         const userMatch = username.match(/^user(\d+)$/);
         const passMatch = password.match(/^pass(\d+)$/);
+        //also check if number is between 1 and 23
 
         if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
             const newUrl = `${window.location.pathname}?user=${userMatch[1]}`;
