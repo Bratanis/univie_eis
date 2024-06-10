@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Ratings Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Customer Ratings Analysis</h1>
+    </header>
+
+    <div class="filters-container">
+        <form id="filterForm">
+            <div class="filter-block">
+                <h2>Age Range</h2>
+                <label for="ageMin">Min Age:</label>
+                <input type="number" id="ageMin" name="ageMin" min="0">
+                <label for="ageMax">Max Age:</label>
+                <input type="number" id="ageMax" name="ageMax">
+            </div>
+            <div class="filter-block">
+                <h2>Gender</h2>
+                <select id="gender" name="gender">
+                    <option value="">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="diverse">Diverse</option>
+                </select>
+            </div>
+            <div class="filter-block">
+                <h2>Time Frame</h2>
+                <label for="yearStart">Start Year:</label>
+                <input type="number" id="yearStart" name="yearStart" min="2000" max="2099">
+                <label for="yearEnd">End Year:</label>
+                <input type="number" id="yearEnd" name="yearEnd" min="2000" max="2099">
+            </div>
+            <button type="button" onclick="updateChart()">Generate</button>
+        </form>
+    </div>
+
+    <div id="chartContainer1"></div>
+
+    <script>
+        function updateChart() {
+            const ageMin = document.getElementById('ageMin').value;
+            const ageMax = document.getElementById('ageMax').value;
+            const gender = document.getElementById('gender').value;
+            const yearStart = document.getElementById('yearStart').value;
+            const yearEnd = document.getElementById('yearEnd').value;
+            const urlParams = new URLSearchParams(window.location.search);
+            const districtNr = urlParams.get('user');
+
+            fetch(`/portal_service/api/analytics/visitor-reviews?` + new URLSearchParams({
+                ageMin: ageMin,
+                ageMax: ageMax,
+                gender: gender,
+                yearStart: yearStart,
+                yearEnd: yearEnd,
+                districtNr: districtNr
+            }))
+            .then(response => response.json())
+            .then(data => {
+                displayData(data);
+                renderChart(data);
+            })
+            .catch(error => {
+                console.error('Error fetching visitor reviews:', error);
+                document.getElementById('reviewList').innerHTML = `<li>Error loading data: ${error.message}</li>`;
+            });
+        }
+
+        function displayData(data) {
+            const list = document.getElementById('reviewList');
+            list.innerHTML = '';
+            data.forEach(review => {
+                const date = new Date(review.visitTime);
+                const formattedDate = date.toLocaleDateString(); 
+                const item = document.createElement('li');
+                item.textContent = `Name: ${review.attractionName}, Rating: ${review.rating}, Date: ${formattedDate}, District: ${review.districtNr}, Gender: ${review.gender}, Age: ${review.age}`;
+                list.appendChild(item);
+            });
+        }
+
+        function renderChart(data) {
+            const buckets = new Array(10).fill(0);
+            data.forEach(review => {
+                if (review.rating !== undefined) {
+                    const bucketIndex = Math.min(Math.floor(review.rating / 10), 9);
+                    buckets[bucketIndex]++;
+                }
+            });
+
+            console.log('Buckets:', buckets); // Check bucket distribution
+
+            var dataPoints = buckets.map((count, index) => ({
+            x: index * 10, // Set x to start of range
+            y: count
+            }));
+            
+            console.log('Data Points:', dataPoints); // Check data points
+
+            const chart = new CanvasJS.Chart("chartContainer1", {
+                animationEnabled: true,
+                title: {
+                    text: "Ratings Distribution"
+                },
+                axisX: {
+                    title: "Rating Range"
+                },
+                axisY: {
+                    title: "Count",
+                    includeZero: true
+                },
+                data: [{
+                    type: "column",
+                    indexLabelFontColor: "#5A5757",
+      	            indexLabelFontSize: 16,
+		            indexLabelPlacement: "outside",
+                    dataPoints: dataPoints
+                }]
+            });
+
+            chart.render();
+        }
+    </script>
+    <div id="dataDisplay" style="margin-top: 10px;">
+        <h2>Review Data details:</h2>
+         <ul id="reviewList"></ul>
+     </div>
+</body>
+</html>
