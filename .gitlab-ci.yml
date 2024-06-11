@@ -61,6 +61,11 @@ build_docker:
   script:
     - docker build --no-cache --tag $CI_REGISTRY_IMAGE:latest -f .docker/Dockerfile .
     - docker push $CI_REGISTRY_IMAGE:latest
+    # Remove all stopped containers
+    - docker container prune
+
+# Remove all unused images
+    - docker image prune -a
 #    - docker stop $DOCKER_CONTAINER_NAME || true
 #    - docker rm $DOCKER_CONTAINER_NAME || true
 #    - docker stop $MYSQL_CONTAINER_NAME || true
