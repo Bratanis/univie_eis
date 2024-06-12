@@ -1,5 +1,6 @@
 package org.omilab.portal_service.service;
 
+import org.omilab.portal_service.DatabaseConnection;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,9 @@ public class AttractionService {
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTest() {
+
+        DatabaseConnection db = new DatabaseConnection();
+        db.showDatabases(db.connect());
         return "redirect:/spendings.html";
     }
 
