@@ -73,5 +73,31 @@ public class DatabaseConnection {
             // Handle any potential SQLException
         }
     }
+
+    public void createDistricts(Connection con){
+
+        String sql = "CREATE TABLE District (\n" +
+                "    Number INT PRIMARY KEY,\n" +
+                "    Name VARCHAR(100)\n" +
+                ");";
+
+        try {
+            // Create a PreparedStatement object with the SQL statement
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+            // Execute the PreparedStatement to retrieve the results
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Process the retrieved data
+            while (resultSet.next()) { }
+
+            // Close the ResultSet and PreparedStatement
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
 }
 
