@@ -28,8 +28,8 @@ public class AttractionService {
     public String getTest() {
 
         DatabaseConnection db = new DatabaseConnection();
-        db.createDistricts(db.connect());
-        db.showDatabases(db.connect());
+       // db.createDistricts(db.connect());
+        db.showTables(db.connect());
         return "redirect:/spendings.html";
     }
 
