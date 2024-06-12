@@ -47,9 +47,9 @@ build_docker:
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:latest -f .docker/Dockerfile .
     - docker push $CI_REGISTRY_IMAGE:latest
-    - docker stop $DOCKER_CONTAINER_NAME || true
-    - docker rm $DOCKER_CONTAINER_NAME || true
-    - docker run -d --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 $CI_REGISTRY_IMAGE:latest
+#    - docker stop $DOCKER_CONTAINER_NAME || true
+#    - docker rm $DOCKER_CONTAINER_NAME || true
+#    - docker run -d --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 $CI_REGISTRY_IMAGE:latest
 
 deploy_docker:
   stage: deploy
