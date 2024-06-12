@@ -28,7 +28,7 @@ public class AttractionService {
     public String getTest() {
 
         DatabaseConnection db = new DatabaseConnection();
-        db.showDatabases(db.connect());
+        db.showTables(db.connect());
         return "redirect:/spendings.html";
     }
 
