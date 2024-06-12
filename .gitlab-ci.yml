@@ -13,15 +13,15 @@ variables:
   MYSQL_CONTAINER_NAME: "portalService_mysql_container"
   MYSQL_ROOT_PASSWORD: "rootpassword"
   MYSQL_DATABASE: "portal_database"
-  MYSQL_USER: "user"
-  MYSQL_PASSWORD: "userpassword"
+  MYSQL_USER: "root"
+  MYSQL_PASSWORD: "my-secret-pw"
   MYSQL_PORT: "3306"
 
   DB_HOST: "portalService_mysql_container" # Assuming this is the name of your MySQL container
   DB_PORT: "3306" # Assuming this is the port on which MySQL is listening
   DB_NAME: "portal_database" # Assuming this is the name of your database
-  DB_USER: "user" # Assuming this is the username for accessing the database
-  DB_PASSWORD: "userpassword" # Assuming this is the password for accessing the database
+  DB_USER: "root" # Assuming this is the username for accessing the database
+  DB_PASSWORD: "my-secret-pw" # Assuming this is the password for accessing the database
 
   NETWORK_NAME: "portal_service_network"
 
