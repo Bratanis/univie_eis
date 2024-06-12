@@ -29,7 +29,7 @@ public class AttractionService {
 
         DatabaseConnection db = new DatabaseConnection();
         db.createDistricts(db.connect());
-        db.showTables(db.connect());
+        db.showDatabases(db.connect());
         return "redirect:/spendings.html";
     }
 
