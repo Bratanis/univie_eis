@@ -27,7 +27,7 @@ public class PortalServiceApplication extends SpringBootServletInitializer {
             public void addCorsMappings(CorsRegistry registry) {
                 // Apply CORS settings to all endpoints under `/portal_service/api/**`
                 registry.addMapping("/portal_service/api/**")  // Adjust the pattern to match all endpoints
-                        .allowedOrigins("http://localhost:8080", "http://eis.dke.univie.ac.at:9012")  // Allow all requests from this origin
+                        .allowedOrigins("http://localhost:8080")  // Allow all requests from this origin
                         .allowedMethods("GET", "POST", "PUT", "DELETE")  // Specify the HTTP methods allowed
                         .allowedHeaders("*")  // Allow all headers
                         .allowCredentials(true);  // Allow credentials like cookies, authorization headers, etc.
