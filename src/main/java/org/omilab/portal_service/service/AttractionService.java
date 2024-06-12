@@ -28,6 +28,16 @@ public class AttractionService {
         return "redirect:/test.html";
     }
 
+    @GetMapping(value = "/index", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getTest1() {
+        return "redirect:/index.html";
+    }
+
+    @GetMapping(value = "/ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+    public String getTest2() {
+        return "redirect:/ratings.html";
+    }
+
     // Returns attraction by name
     @GetMapping(value = "/attractions/name/{name}", produces = MediaType.TEXT_PLAIN_VALUE)
     public String getAttractionByName(@PathVariable String name) {
