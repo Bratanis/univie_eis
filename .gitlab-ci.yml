@@ -17,6 +17,13 @@ variables:
   MYSQL_PASSWORD: "userpassword"
   MYSQL_PORT: "3306"
 
+  DB_HOST: "portalService_mysql_container" # Assuming this is the name of your MySQL container
+  DB_PORT: "3306" # Assuming this is the port on which MySQL is listening
+  DB_NAME: "portal_database" # Assuming this is the name of your database
+  DB_USER: "user" # Assuming this is the username for accessing the database
+  DB_PASSWORD: "userpassword" # Assuming this is the password for accessing the database
+
+
   NETWORK_NAME: "portal_service_network"
 
 cache:
@@ -73,7 +80,9 @@ deploy_docker:
     - docker network create $NETWORK_NAME || true
     #create containers 1.DB 2.APP
     - docker run -d --network $NETWORK_NAME --label io.portainer.accesscontrol.teams=eis2024 --name $MYSQL_CONTAINER_NAME -e MYSQL_ROOT_PASSWORD=$MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=$MYSQL_DATABASE -e MYSQL_USER=$MYSQL_USER -e MYSQL_PASSWORD=$MYSQL_PASSWORD -v database:/var/lib/mysql mysql:latest
-    - docker run -d --network $NETWORK_NAME --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 DB_HOST=$MYSQL_CONTAINER_NAME -e DB_PORT=$MYSQL_PORT -e DB_NAME=$MYSQL_DATABASE -e DB_USER=$MYSQL_USER -e DB_PASSWORD=$MYSQL_PASSWORD -v database:/var/lib/docker/volumes/database/_data $CI_REGISTRY_IMAGE:latest
+    #- docker run -d --network $NETWORK_NAME --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 DB_HOST=$MYSQL_CONTAINER_NAME -e DB_PORT=$MYSQL_PORT -e DB_NAME=$MYSQL_DATABASE -e DB_USER=$MYSQL_USER -e DB_PASSWORD=$MYSQL_PASSWORD -v database:/var/lib/docker/volumes/database/_data $CI_REGISTRY_IMAGE:latest
+    - docker run -d --network $NETWORK_NAME --label io.portainer.accesscontrol.teams=eis2024 --name $DOCKER_CONTAINER_NAME -p $DOCKER_CONTAINER_PORT:8080 -e DB_HOST=$DB_HOST -e DB_PORT=$DB_PORT -e DB_NAME=$DB_NAME -e DB_USER=$DB_USER -e DB_PASSWORD=$DB_PASSWORD -v database:/var/lib/docker/volumes/database/_data $CI_REGISTRY_IMAGE:latest # Ensure application container is running
+
     - sleep 30 # Wait for MySQL to start
     - docker exec $MYSQL_CONTAINER_NAME mysql -u root -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'user'@'%'; FLUSH PRIVILEGES;"
 
