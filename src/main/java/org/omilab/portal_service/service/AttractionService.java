@@ -25,7 +25,7 @@ public class AttractionService {
 
     @GetMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTest() {
-        return "redirect:/test.html";
+        return "redirect:/spendings.html";
     }
 
     @GetMapping(value = "/index", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,9 +33,9 @@ public class AttractionService {
         return "redirect:/index.html";
     }
 
-    @GetMapping(value = "/ratings", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/times", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTest2() {
-        return "redirect:/ratings.html";
+        return "redirect:/times.html";
     }
 
     // Returns attraction by name
