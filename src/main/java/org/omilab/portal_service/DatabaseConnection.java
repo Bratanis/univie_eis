@@ -69,6 +69,8 @@ public class DatabaseConnection {
                 System.out.println(resultSet.getString(1)); // Assuming one column in result set
             }
 
+            System.out.println("Tables should be shown already");
+
             // Close the ResultSet and Statement
             resultSet.close();
             statement.close();
