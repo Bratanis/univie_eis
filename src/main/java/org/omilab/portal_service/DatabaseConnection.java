@@ -14,11 +14,9 @@ public class DatabaseConnection {
         String password = System.getenv("DB_PASSWORD");
 
         try {
-            System.out.println("BEFORE CONNECTION!");
             Connection connection = DriverManager.getConnection(jdbcUrl, username, password);
             System.out.println("Connection successful!");
 
-            System.out.println("AFTER CONNECTION!");
             // Perform database operations
             return connection;
         } catch (SQLException e) {

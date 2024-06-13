@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 @Controller
 public class AttractionService {
     DatabaseConnection db = new DatabaseConnection();
-    Connection con = db.connect();
     // Returns all attractions in the database (as JSON)
     @GetMapping(value = "/attractions/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAttractions() {
@@ -38,11 +37,11 @@ public class AttractionService {
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
         //db.alterDistrictTable(con);
-        db.insertDistrictData(con);
+        db.insertDistrictData(db.connect());
         System.out.println("District tables data:");
-        db.showDistricts(con);
+        db.showDistricts(db.connect());
 
-        db.insertAttractionData(con);
+        db.insertAttractionData(db.connect());
         return "redirect:/spendings.html";
     }
 
