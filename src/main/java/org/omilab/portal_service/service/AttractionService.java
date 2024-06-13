@@ -32,6 +32,8 @@ public class AttractionService {
         return "redirect:/spendings.html";
     }
 
+
+
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
         db.createDistricts(db.connect());
