@@ -231,7 +231,7 @@ public class DatabaseConnection {
 
 
         try (Connection conn = con) {
-            conn.setAutoCommit(false); // Begin transaction
+            conn.setAutoCommit(true); // Begin transaction
 
             for (String insertStatement : insertStatements) {
                 PreparedStatement stmt = conn.prepareStatement(insertStatement);

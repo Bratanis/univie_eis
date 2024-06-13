@@ -41,7 +41,7 @@ public class AttractionService {
         System.out.println("District tables data:");
         db.showDistricts(db.connect());
 
-        db.insertAttractionData(db.connect());
+//        db.insertAttractionData(db.connect());
         return "redirect:/spendings.html";
     }
 
