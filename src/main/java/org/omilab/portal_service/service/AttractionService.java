@@ -37,8 +37,8 @@ public class AttractionService {
 
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
-        db.alterDistrictTable(con);
-        System.out.println("District tables altered");
+        //db.alterDistrictTable(con);
+        System.out.println("District tables data:");
         db.showDistricts(con);
         return "redirect:/spendings.html";
     }

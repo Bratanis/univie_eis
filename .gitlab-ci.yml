@@ -3,6 +3,7 @@ stages:
   - build
   - dockerize
   - deploy
+  - populate_database
   
 variables:
   MAVEN_CLI_OPTS: "--batch-mode"
@@ -86,5 +87,16 @@ deploy_docker:
     - sleep 30 # Wait for MySQL to start
     - docker exec $MYSQL_CONTAINER_NAME mysql -u root -p$MYSQL_ROOT_PASSWORD -e "GRANT ALL PRIVILEGES ON *.* TO 'user'@'%'; FLUSH PRIVILEGES;"
 
+populate_database:
+  stage: populate_database
+  image: mysql:latest
+  script:
+   - mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME < NewDistrict.sql
+   - mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME < NewAttractions.sql
+   - mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME < Visitor.sql
+   - mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME < NewEvents.sql
+   - mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME < NewVisitRecord.sql
+  dependencies:
+   - deploy_docker
 
 
