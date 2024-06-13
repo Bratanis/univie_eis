@@ -30,9 +30,6 @@ public class AttractionService {
         db.showDatabases(db.connect());
         db.showTables(db.connect());
         db.showTables2(db.connect());
-        db.showTables3(db.connect());
-        db.showTables4(db.connect());
-        db.showTables5(db.connect());
         return "redirect:/spendings.html";
     }
 
@@ -40,7 +37,7 @@ public class AttractionService {
 
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
-        db.createDistricts(db.connect());
+        db.createTables(db.connect());
         return "redirect:/spendings.html";
     }
 

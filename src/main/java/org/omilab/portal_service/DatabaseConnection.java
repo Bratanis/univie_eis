@@ -111,99 +111,67 @@ public class DatabaseConnection {
         }
     }
 
-    public void showTables3(Connection con) {
-        String sql = "SHOW TABLES";
+    public void createTables(Connection con) {
+        String createDistrictTable = "CREATE TABLE IF NOT EXISTS District (" +
+                "    Number INT PRIMARY KEY," +
+                "    Name VARCHAR(100)" +
+                ");";
+
+        String createAttractionTable = "CREATE TABLE IF NOT EXISTS Attraction (" +
+                "    ID INT AUTO_INCREMENT PRIMARY KEY," +
+                "    Name VARCHAR(255)," +
+                "    Address VARCHAR(255)," +
+                "    DistrictNr INT," +
+                "    FOREIGN KEY (DistrictNr) REFERENCES District(Number)" +
+                ");";
+
+        String createVisitorTable = "CREATE TABLE IF NOT EXISTS Visitor (" +
+                "    ID INT AUTO_INCREMENT PRIMARY KEY," +
+                "    Age INT CHECK (Age >= 0)," +
+                "    Gender VARCHAR(50)," +
+                "    Nationality VARCHAR(100)" +
+                ");";
+
+        String createEventTable = "CREATE TABLE IF NOT EXISTS Event (" +
+                "    ID INT AUTO_INCREMENT PRIMARY KEY," +
+                "    Name VARCHAR(255)," +
+                "    Date DATE," +
+                "    Address VARCHAR(255)," +
+                "    Type VARCHAR(100)," +
+                "    DistrictNr INT," +
+                "    FOREIGN KEY (DistrictNr) REFERENCES District(Number)" +
+                ");";
+
+        String createVisitRecordTable = "CREATE TABLE IF NOT EXISTS VisitRecord (" +
+                "    ID INT AUTO_INCREMENT PRIMARY KEY," +
+                "    AttractionID INT," +
+                "    VisitorID INT," +
+                "    VisitTime TIMESTAMP," +
+                "    MoneySpent DECIMAL(10, 2)," +
+                "    TimeSpent DECIMAL(10, 2) CHECK (TimeSpent >= 0 AND TimeSpent <= 24)," +
+                "    Rating DECIMAL(3, 1) CHECK (Rating >= 0 AND Rating <= 100)," +
+                "    FOREIGN KEY (AttractionID) REFERENCES Attraction(ID)," +
+                "    FOREIGN KEY (VisitorID) REFERENCES Visitor(ID)" +
+                ");";
 
         try {
-            // Set the desired database context
-            String useDatabaseSQL = "USE sys";
-            Statement useDatabaseStatement = con.createStatement();
-            useDatabaseStatement.execute(useDatabaseSQL);
+            // Execute each table creation statement
+            executeUpdate(con, createAttractionTable);
+            executeUpdate(con, createVisitorTable);
+            executeUpdate(con, createEventTable);
+            executeUpdate(con, createVisitRecordTable);
 
-            // Create a Statement object with the SQL statement to show tables
-            Statement statement = con.createStatement();
-
-            // Execute the statement to retrieve the tables
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            System.out.println("sys: ");
-            // Process the retrieved data
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1)); // Assuming one column in result set
-            }
-
-            // Close the ResultSet and Statement
-            resultSet.close();
-            statement.close();
-            useDatabaseStatement.close();
+            System.out.println("Tables created successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle any potential SQLException
         }
     }
 
-    public void showTables4(Connection con) {
-        String sql = "SHOW TABLES";
-
-        try {
-            // Set the desired database context
-            String useDatabaseSQL = "USE performance_schema";
-            Statement useDatabaseStatement = con.createStatement();
-            useDatabaseStatement.execute(useDatabaseSQL);
-
-            // Create a Statement object with the SQL statement to show tables
-            Statement statement = con.createStatement();
-
-            // Execute the statement to retrieve the tables
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            System.out.println("performance_schema: ");
-            // Process the retrieved data
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1)); // Assuming one column in result set
-            }
-
-            // Close the ResultSet and Statement
-            resultSet.close();
-            statement.close();
-            useDatabaseStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle any potential SQLException
+    private void executeUpdate(Connection con, String sql) throws SQLException {
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.executeUpdate();
         }
     }
-
-    public void showTables5(Connection con) {
-        String sql = "SHOW TABLES";
-
-        try {
-            // Set the desired database context
-            String useDatabaseSQL = "USE information_schema";
-            Statement useDatabaseStatement = con.createStatement();
-            useDatabaseStatement.execute(useDatabaseSQL);
-
-            // Create a Statement object with the SQL statement to show tables
-            Statement statement = con.createStatement();
-
-            // Execute the statement to retrieve the tables
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            System.out.println("information_schema: ");
-            // Process the retrieved data
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString(1)); // Assuming one column in result set
-            }
-
-            // Close the ResultSet and Statement
-            resultSet.close();
-            statement.close();
-            useDatabaseStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle any potential SQLException
-        }
-    }
-
     public void createDistricts(Connection con) {
         String sql = "CREATE TABLE District (" +
                 "    Number INT PRIMARY KEY," +
