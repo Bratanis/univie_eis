@@ -355,7 +355,7 @@ public class DatabaseConnection {
                 "insert into Attraction (Name, Address, DistrictNr) values ('Danube Island', 'Donauinsel', 22);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Heldenplatz', 'Heldenplatz', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Volksgarten', 'Burgring 1', 1);",
-                "insert into Attraction (Name, Address, DistrictNr) values ('St. Charles\' Church', 'Karlsplatz', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Charles\'s Church', 'Karlsplatz', 4);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Jewish Museum Vienna', 'Dorotheergasse 11', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Museum of Modern Art', 'Museumsplatz 1', 7);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Technical Museum', 'Mariahilfer Straße 212', 15);",
