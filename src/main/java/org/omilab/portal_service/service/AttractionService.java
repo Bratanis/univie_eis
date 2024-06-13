@@ -37,11 +37,11 @@ public class AttractionService {
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
         //db.alterDistrictTable(con);
-        db.insertDistrictData(db.connect());
+//        db.insertDistrictData(db.connect());
         System.out.println("District tables data:");
-        db.showDistricts(db.connect());
 
-//        db.insertAttractionData(db.connect());
+        db.insertAttractionData(db.connect());
+        db.showDistricts(db.connect());
         return "redirect:/spendings.html";
     }
 

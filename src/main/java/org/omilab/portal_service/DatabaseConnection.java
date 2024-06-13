@@ -388,7 +388,7 @@ public class DatabaseConnection {
 
     public void showDistricts(Connection con){
 
-        String sql = "select * from portal_database.District;";
+        String sql = "select * from portal_database.Attraction;";
 
         try {
             // Create a PreparedStatement object with the SQL statement
@@ -397,9 +397,13 @@ public class DatabaseConnection {
             // Execute the PreparedStatement to retrieve the results
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            int count = 0;
             // Process the retrieved data
             while (resultSet.next()) {
-                System.out.println(resultSet.getString(1));
+                count++;
+                if (count <= 15){
+                    System.out.println(resultSet.getString(1));
+                }
             }
 
             // Close the ResultSet and PreparedStatement
