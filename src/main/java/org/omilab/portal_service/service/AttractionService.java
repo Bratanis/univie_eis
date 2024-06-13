@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.http.MediaType;
 
+import java.sql.Connection;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Controller
 public class AttractionService {
     DatabaseConnection db = new DatabaseConnection();
-
+    Connection con = db.connect();
     // Returns all attractions in the database (as JSON)
     @GetMapping(value = "/attractions/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getAllAttractions() {
@@ -29,7 +30,6 @@ public class AttractionService {
     public String getTest() {
         db.showDatabases(db.connect());
         db.showTables(db.connect());
-        db.showTables2(db.connect());
         return "redirect:/spendings.html";
     }
 
@@ -37,7 +37,9 @@ public class AttractionService {
 
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
-        db.createTables(db.connect());
+        db.alterDistrictTable(con);
+        System.out.println("District tables altered");
+        db.showDistricts(con);
         return "redirect:/spendings.html";
     }
 
