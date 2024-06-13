@@ -42,7 +42,7 @@ public class AttractionService {
 
         db.insertAttractionData(db.connect());
         db.showVisitor(db.connect());
-        //db.showDistricts(db.connect());
+        db.showDistricts(db.connect());
        // db.showVisitor(db.connect());
         return "redirect:/spendings.html";
     }
