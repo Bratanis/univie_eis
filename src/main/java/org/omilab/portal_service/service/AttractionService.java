@@ -40,9 +40,10 @@ public class AttractionService {
 //        db.insertDistrictData(db.connect());
         System.out.println("District tables data:");
 
-      //  db.insertAttractionData(db.connect());
-        db.showDistricts(db.connect());
+        db.insertAttractionData(db.connect());
         db.showVisitor(db.connect());
+        //db.showDistricts(db.connect());
+       // db.showVisitor(db.connect());
         return "redirect:/spendings.html";
     }
 

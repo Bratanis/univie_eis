@@ -659,7 +659,7 @@ public class DatabaseConnection {
 
     public void showVisitor(Connection con){
 
-        String sql = "select * from portal_database.Visitor;";
+        String sql = "select * from portal_database.VisitRecord;";
 
         try {
             // Create a PreparedStatement object with the SQL statement
@@ -671,7 +671,7 @@ public class DatabaseConnection {
             List<String> ids = new ArrayList<>();
             // Process the retrieved data
             while (resultSet.next()) {
-                ids.add(resultSet.getString("ID"));
+                ids.add(resultSet.getString("TimeSpent"));
             }
 
             System.out.println("Visitors ids: " + ids);
