@@ -1,6 +1,7 @@
 package org.omilab.portal_service;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -631,7 +632,7 @@ public class DatabaseConnection {
 
     public void showDistricts(Connection con){
 
-        String sql = "select * from portal_database.VisitRecord;";
+        String sql = "select * from portal_database.Attraction;";
 
         try {
             // Create a PreparedStatement object with the SQL statement
@@ -640,14 +641,40 @@ public class DatabaseConnection {
             // Execute the PreparedStatement to retrieve the results
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            int count = 0;
+            List<String> ids = new ArrayList<>();
             // Process the retrieved data
             while (resultSet.next()) {
-                count++;
-                if (count <= 15){
-                    System.out.println(resultSet.getString("TimeSpent"));
-                }
+                ids.add(resultSet.getString("ID"));
             }
+
+            System.out.println("Attraction ids: " +ids);
+            // Close the ResultSet and PreparedStatement
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
+
+    public void showVisitor(Connection con){
+
+        String sql = "select * from portal_database.Visitor;";
+
+        try {
+            // Create a PreparedStatement object with the SQL statement
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+
+            // Execute the PreparedStatement to retrieve the results
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            List<String> ids = new ArrayList<>();
+            // Process the retrieved data
+            while (resultSet.next()) {
+                ids.add(resultSet.getString("ID"));
+            }
+
+            System.out.println("Visitors ids: " + ids);
 
             // Close the ResultSet and PreparedStatement
             resultSet.close();
