@@ -158,6 +158,7 @@ public class DatabaseConnection {
 
     //FILL
 
+    /*
      public void insertAttractionData(Connection con) {
 
         List<String> insertStatements = Arrays.asList(
@@ -626,7 +627,7 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
-
+*/
 
 
 
