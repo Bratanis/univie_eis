@@ -29,6 +29,10 @@ public class AttractionService {
     public String getTest() {
         db.showDatabases(db.connect());
         db.showTables(db.connect());
+        db.showTables2(db.connect());
+        db.showTables3(db.connect());
+        db.showTables4(db.connect());
+        db.showTables5(db.connect());
         return "redirect:/spendings.html";
     }
 

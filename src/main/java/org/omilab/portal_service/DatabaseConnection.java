@@ -64,12 +64,135 @@ public class DatabaseConnection {
             // Execute the statement to retrieve the tables
             ResultSet resultSet = statement.executeQuery(sql);
 
+            System.out.println("portal_database: ");
             // Process the retrieved data
             while (resultSet.next()) {
                 System.out.println(resultSet.getString(1)); // Assuming one column in result set
             }
 
-            System.out.println("Tables should be shown already");
+            // Close the ResultSet and Statement
+            resultSet.close();
+            statement.close();
+            useDatabaseStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
+
+    public void showTables2(Connection con) {
+        String sql = "SHOW TABLES";
+
+        try {
+            // Set the desired database context
+            String useDatabaseSQL = "USE mysql";
+            Statement useDatabaseStatement = con.createStatement();
+            useDatabaseStatement.execute(useDatabaseSQL);
+
+            // Create a Statement object with the SQL statement to show tables
+            Statement statement = con.createStatement();
+
+            // Execute the statement to retrieve the tables
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println("mysql: ");
+            // Process the retrieved data
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1)); // Assuming one column in result set
+            }
+
+            // Close the ResultSet and Statement
+            resultSet.close();
+            statement.close();
+            useDatabaseStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
+
+    public void showTables3(Connection con) {
+        String sql = "SHOW TABLES";
+
+        try {
+            // Set the desired database context
+            String useDatabaseSQL = "USE sys";
+            Statement useDatabaseStatement = con.createStatement();
+            useDatabaseStatement.execute(useDatabaseSQL);
+
+            // Create a Statement object with the SQL statement to show tables
+            Statement statement = con.createStatement();
+
+            // Execute the statement to retrieve the tables
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println("sys: ");
+            // Process the retrieved data
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1)); // Assuming one column in result set
+            }
+
+            // Close the ResultSet and Statement
+            resultSet.close();
+            statement.close();
+            useDatabaseStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
+
+    public void showTables4(Connection con) {
+        String sql = "SHOW TABLES";
+
+        try {
+            // Set the desired database context
+            String useDatabaseSQL = "USE performance_schema";
+            Statement useDatabaseStatement = con.createStatement();
+            useDatabaseStatement.execute(useDatabaseSQL);
+
+            // Create a Statement object with the SQL statement to show tables
+            Statement statement = con.createStatement();
+
+            // Execute the statement to retrieve the tables
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println("performance_schema: ");
+            // Process the retrieved data
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1)); // Assuming one column in result set
+            }
+
+            // Close the ResultSet and Statement
+            resultSet.close();
+            statement.close();
+            useDatabaseStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential SQLException
+        }
+    }
+
+    public void showTables5(Connection con) {
+        String sql = "SHOW TABLES";
+
+        try {
+            // Set the desired database context
+            String useDatabaseSQL = "USE information_schema";
+            Statement useDatabaseStatement = con.createStatement();
+            useDatabaseStatement.execute(useDatabaseSQL);
+
+            // Create a Statement object with the SQL statement to show tables
+            Statement statement = con.createStatement();
+
+            // Execute the statement to retrieve the tables
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            System.out.println("information_schema: ");
+            // Process the retrieved data
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1)); // Assuming one column in result set
+            }
 
             // Close the ResultSet and Statement
             resultSet.close();
