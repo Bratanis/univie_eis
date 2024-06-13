@@ -606,7 +606,7 @@ public class DatabaseConnection {
                 "insert into VisitRecord (AttractionID, VisitorID, VisitTime, MoneySpent, TimeSpent, Rating) values (48, 312, '2011-12-18', 594.19, 7.24, 32.8);",
                 "insert into VisitRecord (AttractionID, VisitorID, VisitTime, MoneySpent, TimeSpent, Rating) values (55, 677, '2012-03-05', 429.85, 4.66, 88.7);",
                 "insert into VisitRecord (AttractionID, VisitorID, VisitTime, MoneySpent, TimeSpent, Rating) values (13, 843, '2008-04-14', 763.92, 13.31, 23.0);",
-                "insert into VisitRecord (AttractionID, VisitorID, VisitTime, MoneySpent, TimeSpent, Rating) values (77, 402, '2024-10-08', 114.12, 9.55, 89.1);",
+                "insert into VisitRecord (AttractionID, VisitorID, VisitTime, MoneySpent, TimeSpent, Rating) values (77, 402, '2024-10-08', 114.12, 9.55, 89.1);"
 
                 );
 
