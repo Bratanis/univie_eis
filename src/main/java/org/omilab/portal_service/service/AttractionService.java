@@ -38,8 +38,11 @@ public class AttractionService {
     @GetMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getTt() {
         //db.alterDistrictTable(con);
+        db.insertDistrictData(con);
         System.out.println("District tables data:");
         db.showDistricts(con);
+
+        db.insertAttractionData(con);
         return "redirect:/spendings.html";
     }
 

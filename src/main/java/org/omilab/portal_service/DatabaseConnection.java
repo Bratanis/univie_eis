@@ -248,6 +248,146 @@ public class DatabaseConnection {
         }
     }
 
+    public void insertAttractionData(Connection con) {
+
+        List<String> insertStatements = Arrays.asList(
+                "insert into Attraction (Name, Address, DistrictNr) values ('Carousel', 'Prater Hauptallee', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Haunted House', 'Schönbrunner Schloßstraße', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Ferris Wheel', 'Riesenradplatz', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Roller Coaster', 'Prater', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Water Slide', 'Böhmischer Prater', 10);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Museum of Technology', 'Mariahilfer Straße 212', 15);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Zoo', 'Maxingstraße 13b', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Botanical Garden', 'Rennweg 14', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Belvedere Palace', 'Prinz Eugen-Straße 27', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Art History Museum', 'Maria-Theresien-Platz', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Natural History Museum', 'Burgring 7', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Leopold Museum', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Albertina Museum', 'Albertinaplatz 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Schönbrunn Palace', 'Schönbrunner Schloßstraße 47', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna State Opera', 'Opernring 2', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Stephen''s Cathedral', 'Stephansplatz 3', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Hundertwasser House', 'Kegelgasse 34-38', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Danube Tower', 'Donauturmstraße 4', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Zentralfriedhof', 'Simmeringer Hauptstraße 234', 11);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Neptune Fountain at Schönbrunn', 'Schönbrunner Schloßstraße 47', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Mariahilfer Straße Shopping Street', 'Mariahilfer Straße', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('MuseumsQuartier', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Lainzer Tiergarten', 'Lainzer Tor', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Kurpark Oberlaa', 'Kurbadstraße 10', 10);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Augarten', 'Obere Augartenstraße 1', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Prater Museum', 'Oswald-Thomas-Platz 1', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('House of the Sea', 'Fritz-Grünbaum-Platz 1', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Seegrotte Hinterbrühl', 'Grutschgasse 2a', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Thermalbad Vösendorf', 'Seepark Vösendorf', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Burg Liechtenstein', 'Am Hausberg 2', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Observatory', 'Türkenschanzstraße 17', 18);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Johann Strauss Monument', 'Stadtpark', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Heeresgeschichtliches Museum', 'Arsenal Objekt 1', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('MUMOK (Museum of Modern Art)', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('House of Music', 'Seilerstätte 30', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Beethoven Pasqualatihaus', 'Mölker Bastei 8', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Technical Museum Vienna', 'Mariahilfer Straße 212', 15);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('The Third Man Museum', 'Pressgasse 25', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Ernst Fuchs Museum', 'Hüttelbergstraße 26', 14);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Schmetterlinghaus (Butterfly House)', 'Burggarten', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Crime Museum', 'Große Sperlgasse 24', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Chocolate Museum Vienna', 'Willendorfer Gasse 2-8', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Gasometer City', 'Guglgasse 6', 11);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Bank Austria Kunstforum', 'Freyung 8', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Liesing River Path', 'Liesingbachweg', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Liesing Business Park', 'Liesinger-Platz 1', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Ottakring Brewery', 'Ottakringer Platz 1', 16);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Donaupark', 'Arbeiterstrandbadstraße', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Perchtoldsdorf Castle', 'Marktplatz 11', 23);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Sigmund Freud Museum', 'Berggasse 19', 9);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Schoenbrunn Orangery', 'Schönbrunner Schloßstraße', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Karl Marx-Hof', 'Heiligenstädter Straße 82', 19);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna City Beach Club', 'Neue Donau Mitte', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Woods', 'Wienerwald', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Neue Donau', 'Neue Donau', 21);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Alte Donau', 'Arbeiterstrandbadstraße', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Kahlenberg', 'Josefsdorf 38', 19);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Cobenzl', 'Am Cobenzl 94', 19);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Burg Kreuzenstein', 'Kreuzensteiner Straße', 21);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Lainzer Tiergarten', 'Hermesvilla', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Volksgarten', 'Dr.-Karl-Renner-Ring', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Stadtpark', 'Parkring 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Prater', 'Prater', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Karlskirche', 'Kreuzherrengasse 1', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Augarten Contemporary', 'Obere Augartenstraße 1e', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Gloriette Schönbrunn', 'Schönbrunner Schloßstraße 47', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Danube Tower', 'Donauturmstraße 4', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Belvedere 21', 'Arsenalstraße 1', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Museum of Illusions', 'Wallnerstraße 4', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Donau Zentrum', 'Wagramer Straße 94', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Flakturm Museum', 'Esterházypark', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Wiener Riesenrad', 'Riesenradplatz 1', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Porcelain Manufactory Augarten', 'Obere Augartenstraße 1', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Klimt Villa', 'Feldmühlgasse 11', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Geymüllerschlössel', 'Pötzleinsdorfer Straße 102', 18);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Raimund Theater', 'Wallgasse 18-20', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Theater in der Josefstadt', 'Josefstädter Straße 26', 8);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Volkstheater', 'Neustiftgasse 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Burgtheater', 'Universitätsring 2', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Theater Akzent', 'Theresianumgasse 18', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Ronacher Theater', 'Seilerstätte 9', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Hofburg Palace', 'Michaelerkuppel', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Schönbrunn Palace', 'Schönbrunner Schloßstraße 47', 13);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Belvedere Palace', 'Prinz Eugen-Straße 27', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Hundertwasserhaus', 'Kegelgasse 36-38', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Stephen\'s Cathedral', 'Stephansplatz', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Hundertwasser Village', 'Kegelgasse 36-38', 3);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Karlskirche', 'Karlsplatz', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna State Opera', 'Opernring 2', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Spanish Riding School', 'Michaelerplatz 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Albertina Museum', 'Albertinaplatz 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Leopold Museum', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Kunsthistorisches Museum', 'Maria-Theresien-Platz', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Natural History Museum', 'Burgring 7', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Prater Hauptallee', 'Prater Hauptallee', 2);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Naschmarkt', 'Naschmarkt', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna University of Technology', 'Karlsplatz 13', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('University of Vienna', 'Universitätsring 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Technical University of Vienna', 'Karlsplatz 13', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna City Hall', 'Friedrich-Schmidt-Platz 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Austrian Parliament Building', 'Dr.-Karl-Renner-Ring 3', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Haus des Meeres', 'Fritz-Grünbaum-Platz 1', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Museum Quarter', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Danube Island', 'Donauinsel', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Heldenplatz', 'Heldenplatz', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Volksgarten', 'Burgring 1', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Charles\' Church', 'Karlsplatz', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Jewish Museum Vienna', 'Dorotheergasse 11', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Museum of Modern Art', 'Museumsplatz 1', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Technical Museum', 'Mariahilfer Straße 212', 15);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna House of the Sea', 'Fritz-Grünbaum-Platz 1', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Museum of Natural History', 'Burgring 7', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Museum of Applied Arts, Vienna', 'Stubenring 5', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Danube Park', 'Arbeiterstrandbadstraße', 22);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Stephansplatz', 'Stephansplatz', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('House of the Sea Vienna', 'Fritz-Grünbaum-Platz 1', 6);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna\'s Technical Museum', 'Mariahilfer Straße 212', 15);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Kunsthistorisches Museum Vienna', 'Maria-Theresien-Platz', 7);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Hofburg Vienna', 'Michaelerkuppel', 1);"
+                );
+
+        try (Connection conn = con) {
+            conn.setAutoCommit(false); // Begin transaction
+
+            for (String insertStatement : insertStatements) {
+                PreparedStatement stmt = conn.prepareStatement(insertStatement);
+                stmt.executeUpdate();
+                stmt.close();
+            }
+
+            conn.commit(); // Commit transaction
+            System.out.println("Attraction data inserted successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showDistricts(Connection con){
 
         String sql = "select * from portal_database.District;";
