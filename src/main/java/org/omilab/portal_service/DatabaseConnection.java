@@ -333,7 +333,7 @@ public class DatabaseConnection {
                 "insert into Attraction (Name, Address, DistrictNr) values ('Schönbrunn Palace', 'Schönbrunner Schloßstraße 47', 13);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Belvedere Palace', 'Prinz Eugen-Straße 27', 3);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Hundertwasserhaus', 'Kegelgasse 36-38', 3);",
-                "insert into Attraction (Name, Address, DistrictNr) values ('St. Stephen\'s Cathedral', 'Stephansplatz', 1);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Stephen Cathedral', 'Stephansplatz', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Hundertwasser Village', 'Kegelgasse 36-38', 3);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Karlskirche', 'Karlsplatz', 4);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna State Opera', 'Opernring 2', 1);",
@@ -354,7 +354,7 @@ public class DatabaseConnection {
                 "insert into Attraction (Name, Address, DistrictNr) values ('Danube Island', 'Donauinsel', 22);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Heldenplatz', 'Heldenplatz', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Volksgarten', 'Burgring 1', 1);",
-                "insert into Attraction (Name, Address, DistrictNr) values ('St. Charles\'s Church', 'Karlsplatz', 4);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('St. Charles Church', 'Karlsplatz', 4);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Jewish Museum Vienna', 'Dorotheergasse 11', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Museum of Modern Art', 'Museumsplatz 1', 7);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Technical Museum', 'Mariahilfer Straße 212', 15);",
@@ -364,7 +364,7 @@ public class DatabaseConnection {
                 "insert into Attraction (Name, Address, DistrictNr) values ('Danube Park', 'Arbeiterstrandbadstraße', 22);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Stephansplatz', 'Stephansplatz', 1);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('House of the Sea Vienna', 'Fritz-Grünbaum-Platz 1', 6);",
-                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna\'s Technical Museum', 'Mariahilfer Straße 212', 15);",
+                "insert into Attraction (Name, Address, DistrictNr) values ('Vienna Technical Museum', 'Mariahilfer Straße 212', 15);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Kunsthistorisches Museum Vienna', 'Maria-Theresien-Platz', 7);",
                 "insert into Attraction (Name, Address, DistrictNr) values ('Hofburg Vienna', 'Michaelerkuppel', 1);"
                 );
