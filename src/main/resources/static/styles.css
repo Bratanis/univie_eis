@@ -1,7 +1,7 @@
 /* Basic reset */
 body, h1, h2, div, button {
     margin: 0;
-    padding: 0;
+    padding: bottom 5px;
     border: none;
 }
 
@@ -24,7 +24,6 @@ body {
 
 header {
     text-align: center;
-    padding-top: 20px; /* Adding padding to make the header visible */
     margin-bottom: 20px;
     font-size: 2em; /* Larger font size for visibility */
     font-weight: bold; /* Ensuring the font is bold */
@@ -38,11 +37,11 @@ h2 {
 
 .filters-container {
     background-color: #9E6F50; 
-    padding: 20px 40px; /* Increased padding for aesthetic spacing */
+    padding: 10px 40px; /* Increased padding for aesthetic spacing */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     max-width: 80%; 
-    margin: 0 auto 30px; 
+    margin: 0 auto 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -211,8 +210,13 @@ button:hover {
     margin-top: 10px;
     background: white; /* Sets a white background for the container */
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for depth */
-    overflow-y: auto; /* Enables vertical scrolling */
     overflow-x: hidden; /* Hides horizontal scroll */
+    height: 550px; /* Sets a fixed height for the images container */
+    overflow-y: scroll; /* Enables vertical scrolling */
+}
+
+#button-container {
+    padding-bottom: 20px; /* Adds space below the button container */
 }
 
 .district-images img {
@@ -230,6 +234,7 @@ button:hover {
 }
 
 .main-content, .photo-sidebar {
+    padding-top: 10px; /* Adds space at the top */
     padding: 10px;
     background: white;
     overflow-y: auto;
@@ -238,14 +243,18 @@ button:hover {
 .data-container {
     display: flex;
     margin-top: 20px;
+    padding-top: 20px;
+    max-height: 450px; /* Sets a fixed max height for scrolling */
+    min-width: 800;
 }
 
 .attractions, .events {
     width: 50%;
     padding: 10px;
-    min-height: 400px; /* Ensures the container has a minimum height before content loads */
-    max-height: 400px; /* Sets a fixed max height for scrolling */
+    min-height: 350px; /* Ensures the container has a minimum height before content loads */
+    max-height: 350px; /* Sets a fixed max height for scrolling */
     overflow-y: auto; /* Enables vertical scrolling */
+    min-width: 350px; /* Ensures a minimum width for the container */
 }
 
 .white-background {

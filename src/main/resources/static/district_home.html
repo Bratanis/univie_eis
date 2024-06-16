@@ -9,12 +9,12 @@
 
 <body>
     <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 95%;">
-        <button id="logoutButton" style="margin: 10px; padding: 10px 5px; font-size: 17px;" onclick="logout()">Log out</button>
+        <button id="logoutButton" style="margin: 10px; padding: 5px 5px; font-size: 17px;" onclick="logout()"> Log out </button>
     </div> 
     <header>
         <h1>District Homepage</h1>
     </header>
-    <div class="button-container">
+    <div class="button-container" style="padding-bottom: 10px;">
         <button id="ratingsButton">Ratings</button>
         <button id="spendingsButton">Spending</button>
         <button id="visitorsButton">Visitors</button>
@@ -22,7 +22,7 @@
     </div>
     <div class="content">
         <div class="main-content">
-            <div id="district-info" class="white-background">
+            <div id="district-info" class="white-background" style = "min-width: 800px;">
                 <h2>District Description</h2>
                 <p id="district-description">Loading...</p>
             </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="photo-sidebar">
             <div class="district-images">
-                <p>New on social media</p>
+                <p>New on social media:</p>
                 <img id="district-image-1" src="" alt="District Image 1">
                 <img id="district-image-2" src="" alt="District Image 2">
                 <img id="district-image-3" src="" alt="District Image 3">
@@ -165,19 +165,22 @@
             const urlParams = new URLSearchParams(window.location.search);
             const user = urlParams.get('user');
             if (user) {
-                for (let i = 1; i <= 4; i++) { 
-                    const imagePath = `${user}.${i}.jpg`;
+                for (let i = 1; i <= 4; i++) {
+                    // Prefix the file path with "photos/" and format it as required
+                    const imagePath = `photos/${user}.${i}.jpg`;
                     document.getElementById(`district-image-${i}`).src = imagePath;
                     document.getElementById(`district-image-${i}`).alt = `Image of District ${user}, Part ${i}`;
                 }
             } else {
+                // If no user is specified, remove image source and update the alt text
                 for (let i = 1; i <= 4; i++) {
                     document.getElementById(`district-image-${i}`).src = '';
                     document.getElementById(`district-image-${i}`).alt = 'No district image available';
                 }
             }
         }
-        </script>
+
+    </script>
         
 </body>
 </html>
