@@ -3,117 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Ratings Analysis</title>
-    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    <title>Visitor Times Analysis</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
+    <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 95%;">
+        <button id="homeButton" style="margin: 10px; padding: 10px 5px; font-size: 17px;">Home</button>
+    </div>  
     <header>
-        <h1>Top Visiting Times Analysis</h1>
+        <h1>Visitor Times Analysis</h1>
     </header>
+
     <div class="filters-container">
         <form id="filterForm">
-            <!-- Age Range Selector -->
             <div class="filter-block">
                 <h2>Age Range</h2>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="children" name="ageRange" value="children">
-                    <label for="children">Children</label>
-                    <input type="checkbox" id="youngAdults" name="ageRange" value="youngAdults">
-                    <label for="youngAdults">Young Adults</label>
-                    <input type="checkbox" id="middleAged" name="ageRange" value="middleAged">
-                    <label for="middleAged">Middle Aged</label>
-                    <input type="checkbox" id="elderly" name="ageRange" value="elderly">
-                    <label for="elderly">Elderly</label>
-                </div>
+                <label for="ageMin">Min Age:</label>
+                <input type="number" id="ageMin" name="ageMin" min="0">
+                <label for="ageMax">Max Age:</label>
+                <input type="number" id="ageMax" name="ageMax">
             </div>
-
-            <!-- Gender Selector -->
             <div class="filter-block">
                 <h2>Gender</h2>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="male" name="gender" value="male">
-                    <label for="male">Male</label>
-                    <input type="checkbox" id="female" name="gender" value="female">
-                    <label for="female">Female</label>
-                    <input type="checkbox" id="diverse" name="gender" value="diverse">
-                    <label for="diverse">Diverse</label>
-                </div>
+                <select id="gender" name="gender">
+                    <option value="">All</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="diverse">Diverse</option>
+                </select>
             </div>
-
-            <!-- Time Frame Selector -->
             <div class="filter-block">
                 <h2>Time Frame</h2>
-                <div class="checkbox-group">
-                    <input type="checkbox" id="year2021" name="timeFrame" value="2021">
-                    <label for="year2021">2021</label>
-                    <input type="checkbox" id="year2022" name="timeFrame" value="2022">
-                    <label for="year2022">2022</label>
-                    <input type="checkbox" id="year2023" name="timeFrame" value="2023">
-                    <label for="year2023">2023</label>
-                    <input type="checkbox" id="year2024" name="timeFrame" value="2024">
-                    <label for="year2024">2024</label>
-                </div>
+                <label for="yearStart">Start Year:</label>
+                <input type="number" id="yearStart" name="yearStart" min="2000" max="2099">
+                <label for="yearEnd">End Year:</label>
+                <input type="number" id="yearEnd" name="yearEnd" min="2000" max="2099">
             </div>
-
-
-            <!-- Submit Button -->
             <button type="button" onclick="updateChart()">Generate</button>
-        </fieldset>
-    </form>
-</div>
-    <!-- First Chart Container -->
-    <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+        </form>
+    </div>
 
-    <!-- Second Chart Container -->
-    <div id="chartContainer2" style="height: 300px; width: 100%;"></div>
-     
-     
+    <div id="chartContainer1"></div>
+    <div id="chartContainer2"></div>
+
     <script>
-     function updateChart() {
- // Chart for the first container
- var chart1 = new CanvasJS.Chart("chartContainer1", {
-     animationEnabled: true,
-     title: {
-         text: "Customer Reviews"
-     },
-     data: [{
-         type: "stackedBar100",
-         toolTipContent: "{label}<br><b>{name}:</b> {y} (#percent%)",
-         showInLegend: true,
-         name: "April",
-         dataPoints: [
-             { y: 600, label: "Attraction1" },
-             { y: 400, label: "Attraction2" },
-             { y: 120, label: "Attraction3" }
-         ]
-     }]
- });
- chart1.render();
- 
- // Chart for the second container
- var chart2 = new CanvasJS.Chart("chartContainer2", {
-     animationEnabled: true,
-     title: {
-         text: "Desktop Search Engine Market Share - 2016"
-     },
-     data: [{
-         type: "pie",
-         startAngle: 240,
-         yValueFormatString: "##0.00\"%\"",
-         indexLabel: "{label} {y}",
-         dataPoints: [
-             { y: 79.45, label: "Google" },
-             { y: 7.31, label: "Bing" },
-             { y: 7.06, label: "Baidu" },
-             { y: 4.91, label: "Yahoo" },
-             { y: 1.26, label: "Others" }
-         ]
-     }]
- });
- chart2.render();
- }
- </script>
- 
+        function updateChart() {
+            const ageMin = document.getElementById('ageMin').value;
+            const ageMax = document.getElementById('ageMax').value;
+            const gender = document.getElementById('gender').value;
+            const yearStart = parseInt(document.getElementById('yearStart').value);
+            const yearEnd = parseInt(document.getElementById('yearEnd').value);
+            const urlParams = new URLSearchParams(window.location.search);
+            const districtNr = urlParams.get('user');
+
+            if (yearEnd <= yearStart) {
+                alert("End year must be greater than start year.");
+                return;
+            }
+
+            fetch(`/portal_service/api/analytics/visitor-times?` + new URLSearchParams({
+                ageMin: ageMin,
+                ageMax: ageMax,
+                gender: gender,
+                yearStart: yearStart,
+                yearEnd: yearEnd,
+                districtNr: districtNr
+            }))
+            .then(response => response.json())
+            .then(data => {
+                renderMonthChart(data);
+                renderWeekdayChart(data);
+            })
+            .catch(error => {
+                console.error('Error fetching visitor times:', error);
+            });
+        }
+
+        function renderMonthChart(data) {
+            const months = new Array(12).fill(0);
+            data.forEach(visit => {
+                const month = new Date(visit.visitTime).getMonth();
+                months[month]++;
+            });
+
+            const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const monthDataPoints = months.map((count, index) => ({
+                label: monthLabels[index],
+                y: count
+            }));
+
+            var chart1 = new CanvasJS.Chart("chartContainer1", {
+                animationEnabled: true,
+                title: {
+                    text: "Visitor Counts by Month"
+                },
+                axisY: {
+                    title: "Number of Visits",
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: monthDataPoints
+                }]
+            });
+            chart1.render();
+        }
+
+        function renderWeekdayChart(data) {
+            const weekdays = new Array(7).fill(0);
+            data.forEach(visit => {
+                const day = new Date(visit.visitTime).getDay();
+                weekdays[day]++;
+            });
+
+            const weekdayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            const weekdayDataPoints = weekdays.map((count, index) => ({
+                label: weekdayLabels[index],
+                y: count
+            }));
+
+            var chart2 = new CanvasJS.Chart("chartContainer2", {
+                animationEnabled: true,
+                title: {
+                    text: "Visitor Counts by Day of the Week"
+                },
+                axisY: {
+                    title: "Number of Visits",
+                },
+                data: [{
+                    type: "bar",
+                    dataPoints: weekdayDataPoints
+                }]
+            });
+            chart2.render();
+        }
+     // Function to get the user parameter from the URL
+     function getUserParameter() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get('user');
+     }
+
+     // Set the href for the Home button with the user parameter
+     document.addEventListener('DOMContentLoaded', () => {
+         console.log('DOM fully loaded and parsed');
+         const user = getUserParameter();
+         console.log('User parameter:', user);
+         const homeButton = document.getElementById('homeButton');
+         console.log('Home button:', homeButton);
+         if (user) {
+             homeButton.onclick = () => {
+                 location.href = `index.html?user=${user}`;
+             };
+         } else {
+             homeButton.onclick = () => {
+                 location.href = 'index.html';
+             };
+         }
+     });
+
+    </script>
 </body>
 </html>
+

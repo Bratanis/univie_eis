@@ -28,7 +28,7 @@ public class EventService {
     @GetMapping(value = "/by-district", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getEventsByDistrict(@RequestParam("districtNr") int districtNr) {
         List<Event> events = new ArrayList<>();
-        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event WHERE districtNr = ?";
+        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event WHERE districtNr = ? ORDER BY date DESC";
 
         try (Connection conn = dbConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -55,37 +55,4 @@ public class EventService {
 
         return ResponseEntity.ok(events);
     }
-
-
-    /* 
-
-    @GetMapping("/name/{name}")
-    public String getEventByName(@PathVariable("name") String name) {
-        return "Returns Event with name: " + name;
-    }
-
-    @GetMapping("/id/{id}")
-    public String getEventById(@PathVariable("id") String id) {
-        return "Returns Event with id: " + id;
-    }
-
-    @GetMapping("/all")
-    public String getAllEvents() {
-        return "Returns all events";
-    }
-
-    @GetMapping("/districts/{districts}")
-    public List<String> getEventsByDistricts(@PathVariable("districts") String districtStr) {
-
-        // Convert comma-separated String to List of Integers for districts
-        List<Integer> districts = null;
-        if (districtStr != null && !districtStr.isEmpty()) {
-            districts = Arrays.stream(districtStr.split(","))
-                    .map(Integer::parseInt)
-                    .collect(Collectors.toList());
-        }
-
-        return List.of("Attractions in district " + districts, "More attractions in district " + districts);
-    }
-    */
 }

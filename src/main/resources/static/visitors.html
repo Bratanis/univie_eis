@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 95%;">
+        <button id="homeButton" style="margin: 10px; padding: 10px 5px; font-size: 17px;">Home</button>
+    </div>  
     <header>
         <h1>Visitor Demographic Analysis</h1>
     </header>
@@ -163,6 +166,30 @@ function renderAgeChart(data) {
     });
     chart.render();
 }
+
+     // Function to get the user parameter from the URL
+     function getUserParameter() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get('user');
+     }
+
+     // Set the href for the Home button with the user parameter
+     document.addEventListener('DOMContentLoaded', () => {
+         console.log('DOM fully loaded and parsed');
+         const user = getUserParameter();
+         console.log('User parameter:', user);
+         const homeButton = document.getElementById('homeButton');
+         console.log('Home button:', homeButton);
+         if (user) {
+             homeButton.onclick = () => {
+                 location.href = `index.html?user=${user}`;
+             };
+         } else {
+             homeButton.onclick = () => {
+                 location.href = 'index.html';
+             };
+         }
+     });
 
     </script>
     <div id="dataDisplay" style="margin-top: 10px;">
