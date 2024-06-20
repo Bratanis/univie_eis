@@ -30,6 +30,10 @@
         const passMatch = password.match(/^pass(2[0-3]|[01]?[0-9])$/);
 
         if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
+            if (username === "user0") {
+                window.location.href = "mayor.html";
+                return false;
+            }
             window.location.href = `district_home.html?user=${userMatch[1]}`;
             return false;
         } else {

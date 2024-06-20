@@ -2,6 +2,7 @@ package org.omilab.portal_service.service;
 
 import org.omilab.portal_service.DatabaseConnection;
 import org.omilab.portal_service.model.Attraction;
+import org.omilab.portal_service.model.AttractionOverview;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,74 @@ public class AttractionService {
         } catch (Exception e) {
             logger.error("Failed to fetch attractions", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching attractions: " + e.getMessage());
+        }
+
+        if (attractions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(attractions);
+    }
+
+    @GetMapping(value = "/top-visited", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTopVisitedAttractions() {
+        List<AttractionOverview> attractions = new ArrayList<>();
+        String sql = "SELECT DistrictNr, Attraction.ID, Attraction.Name, COUNT(VisitRecord.ID) AS TotalVisits " +
+                     "FROM portal_database.VisitRecord INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID " +
+                     "GROUP BY Attraction.ID, Attraction.Name " +
+                     "ORDER BY TotalVisits DESC " +
+                     "LIMIT 10";
+
+        try (Connection conn = dbConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                attractions.add(new AttractionOverview(
+                    rs.getInt("DistrictNr"),
+                    rs.getInt("ID"),
+                    rs.getString("Name"),
+                    rs.getInt("TotalVisits"),
+                    null // No average rating for this query
+                ));
+            }
+        } catch (Exception e) {
+            logger.error("Failed to fetch top visited attractions", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching top visited attractions: " + e.getMessage());
+        }
+
+        if (attractions.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(attractions);
+    }
+
+    @GetMapping(value = "/top-rated", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTopRatedAttractions() {
+        List<AttractionOverview> attractions = new ArrayList<>();
+        String sql = "SELECT DistrictNr, Attraction.ID, Attraction.Name, AVG(VisitRecord.Rating) AS AverageRating " +
+                     "FROM portal_database.VisitRecord INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID " +
+                     "GROUP BY Attraction.ID, Attraction.Name " +
+                     "ORDER BY AverageRating DESC " +
+                     "LIMIT 10";
+
+        try (Connection conn = dbConnection.connect();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                attractions.add(new AttractionOverview(
+                    rs.getInt("DistrictNr"),
+                    rs.getInt("ID"),
+                    rs.getString("Name"),
+                    null, // No total visits for this query
+                    rs.getDouble("AverageRating")
+                ));
+            }
+        } catch (Exception e) {
+            logger.error("Failed to fetch top rated attractions", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error fetching top rated attractions: " + e.getMessage());
         }
 
         if (attractions.isEmpty()) {
