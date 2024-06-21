@@ -8,21 +8,26 @@
     <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </head>
 <body>
+    <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 95%;">
+        <button id="homeButton" style="margin: 10px; padding: 10px 10px; font-size: 20px;">Home</button>
+    </div>  
     <header>
         <h1>Customer Ratings Analysis</h1>
     </header>
 
-    <div class="filters-container">
+    <div class="filters-container" style="display: flex; flex-direction: column; align-items: center; width: 400px;">
         <form id="filterForm">
-            <div class="filter-block">
-                <h2>Age Range</h2>
-                <label for="ageMin">Min Age:</label>
-                <input type="number" id="ageMin" name="ageMin" min="0">
-                <label for="ageMax">Max Age:</label>
-                <input type="number" id="ageMax" name="ageMax">
+            <div class="filter-block" style="display: flex; justify-content: space-between; width: 400px; padding: 10px;">
+                <h2 style="flex-basis: 100%;">Age Range</h2>
+                <div style="display: flex; align-items: center;">
+                    <label for="ageMin" style="margin-right: 5px;">Min Age:</label>
+                    <input type="number" id="ageMin" name="ageMin" min="0" style="margin-right: 20px;">
+                    <label for="ageMax" style="margin-right: 5px;">Max Age:</label>
+                    <input type="number" id="ageMax" name="ageMax" max="100">
+                </div>
             </div>
-            <div class="filter-block">
-                <h2>Gender</h2>
+            <div class="filter-block" style="display: flex; justify-content: space-between; width: 100%; padding: 10px;">
+                <h2 style="flex-basis: 100%;">Gender</h2>
                 <select id="gender" name="gender">
                     <option value="">All</option>
                     <option value="male">Male</option>
@@ -30,18 +35,20 @@
                     <option value="diverse">Diverse</option>
                 </select>
             </div>
-            <div class="filter-block">
-                <h2>Time Frame</h2>
-                <label for="yearStart">Start Year:</label>
-                <input type="number" id="yearStart" name="yearStart" min="2000" max="2099">
-                <label for="yearEnd">End Year:</label>
-                <input type="number" id="yearEnd" name="yearEnd" min="2000" max="2099">
+            <div class="filter-block" style="display: flex; justify-content: space-between; width: 100%; padding: 10px;">
+                <h2 style="flex-basis: 100%;">Time Frame</h2>
+                <div style="display: flex; align-items: center;">
+                    <label for="yearStart" style="margin-right: 5px;">Start Year:</label>
+                    <input type="number" id="yearStart" name="yearStart" min="2000" max="2099" style="margin-right: 20px;">
+                    <label for="yearEnd" style="margin-right: 5px;">End Year:</label>
+                    <input type="number" id="yearEnd" name="yearEnd" min="2000" max="2099">
+                </div>
             </div>
-            <button type="button" onclick="updateChart()">Generate</button>
+            <button type="button" style="padding: 10px 23px; font-size: 1em;" onclick="updateChart()">Generate</button>
         </form>
     </div>
 
-    <div id="chartContainer1"></div>
+    <div id="chartContainer1" style="min-height: 250px; width: 100%;"></div>
 
     <script>
         function updateChart() {
@@ -63,7 +70,6 @@
             }))
             .then(response => response.json())
             .then(data => {
-                displayData(data);
                 renderChart(data);
             })
             .catch(error => {
@@ -72,63 +78,73 @@
             });
         }
 
-        function displayData(data) {
-            const list = document.getElementById('reviewList');
-            list.innerHTML = '';
-            data.forEach(review => {
-                const date = new Date(review.visitTime);
-                const formattedDate = date.toLocaleDateString(); 
-                const item = document.createElement('li');
-                item.textContent = `Name: ${review.attractionName}, Rating: ${review.rating}, Date: ${formattedDate}, District: ${review.districtNr}, Gender: ${review.gender}, Age: ${review.age}`;
-                list.appendChild(item);
-            });
-        }
-
         function renderChart(data) {
             const buckets = new Array(10).fill(0);
             data.forEach(review => {
                 if (review.rating !== undefined) {
+                    // Assuming ratings are from 0 to 100
                     const bucketIndex = Math.min(Math.floor(review.rating / 10), 9);
                     buckets[bucketIndex]++;
                 }
             });
 
-            console.log('Buckets:', buckets); // Check bucket distribution
+    console.log('Buckets:', buckets); // Check bucket distribution
 
-            var dataPoints = buckets.map((count, index) => ({
-            x: index * 10, // Set x to start of range
-            y: count
-            }));
-            
-            console.log('Data Points:', dataPoints); // Check data points
+    var dataPoints = buckets.map((count, index) => {
+        const label = `${index * 10}-${index * 10 + 10}%`;
+        return { label: label, y: count };
+    });
+    
+    console.log('Data Points:', dataPoints); // Check data points
 
-            const chart = new CanvasJS.Chart("chartContainer1", {
-                animationEnabled: true,
-                title: {
-                    text: "Ratings Distribution"
-                },
-                axisX: {
-                    title: "Rating Range"
-                },
-                axisY: {
-                    title: "Count",
-                    includeZero: true
-                },
-                data: [{
-                    type: "column",
-                    indexLabelFontColor: "#5A5757",
-      	            indexLabelFontSize: 16,
-		            indexLabelPlacement: "outside",
-                    dataPoints: dataPoints
-                }]
-            });
+    const chart = new CanvasJS.Chart("chartContainer1", {
+        animationEnabled: true,
+        title: {
+            text: "Ratings Distribution"
+        },
+        axisX: {
+            title: "Rating Range"
+        },
+        axisY: {
+            title: "Count",
+            includeZero: true
+        },
+        data: [{
+            type: "column",
+            indexLabelFontColor: "#5A5757",
+            indexLabelFontSize: 16,
+            indexLabelPlacement: "outside",
+            dataPoints: dataPoints
+        }]
+    });
 
-            chart.render();
-        }
+    chart.render();
+}
+
+
+             // Function to get the user parameter from the URL
+     function getUserParameter() {
+         const urlParams = new URLSearchParams(window.location.search);
+         return urlParams.get('user');
+     }
+
+     // Set the href for the Home button with the user parameter
+     document.addEventListener('DOMContentLoaded', () => {
+         console.log('DOM fully loaded and parsed');
+         const user = getUserParameter();
+         console.log('User parameter:', user);
+         const homeButton = document.getElementById('homeButton');
+         console.log('Home button:', homeButton);
+         if (user) {
+             homeButton.onclick = () => {
+                 location.href = `district_home.html?user=${user}`;
+             };
+         } else {
+             homeButton.onclick = () => {
+                 location.href = 'district_home.html';
+             };
+         }
+     });
     </script>
-    <div id="dataDisplay" style="margin-top: 10px;">
-        <h2>Review Data details:</h2>
-         <ul id="reviewList"></ul>
-     </div>
 </body>
 </html>

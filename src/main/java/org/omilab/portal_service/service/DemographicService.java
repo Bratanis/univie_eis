@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping("/analytics")
 public class DemographicService {
 
-    private static final Logger logger = LoggerFactory.getLogger(DemographicService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReviewsService.class);
     private DatabaseConnection dbConnection = new DatabaseConnection();
 
     @GetMapping(value = "/visitor-demographics", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,8 +33,8 @@ public class DemographicService {
 
         logger.info("API call with yearStart: {}, yearEnd: {}, districtNr: {}",
             yearStart, yearEnd, districtNr);
-
-
+    
+        
         List<DemographicData> data = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT age, gender FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
 

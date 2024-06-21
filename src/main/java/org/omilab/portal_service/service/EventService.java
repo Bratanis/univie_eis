@@ -9,8 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,7 @@ public class EventService {
     @GetMapping(value = "/by-district", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getEventsByDistrict(@RequestParam("districtNr") int districtNr) {
         List<Event> events = new ArrayList<>();
-        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event WHERE districtNr = ?";
+        String sql = "SELECT name, date, address, type, districtNr FROM portal_database.Event WHERE districtNr = ? ORDER BY date DESC";
 
         try (Connection conn = dbConnection.connect();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -37,11 +37,11 @@ public class EventService {
 
             while (rs.next()) {
                 events.add(new Event(
-                        rs.getString("name"),
-                        rs.getDate("date"),
-                        rs.getString("address"),
-                        rs.getString("type"),
-                        rs.getInt("districtNr")
+                    rs.getString("name"),
+                    rs.getDate("date"),
+                    rs.getString("address"),
+                    rs.getString("type"),
+                    rs.getInt("districtNr")
                 ));
             }
         } catch (Exception e) {

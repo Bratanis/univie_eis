@@ -36,8 +36,8 @@ public class ReviewsService {
 
         logger.info("API call with ageMin: {}, ageMax: {}, gender: '{}', yearStart: {}, yearEnd: {}, districtNr: {}",
             ageMin, ageMax, gender, yearStart, yearEnd, districtNr);
-
-
+    
+        
         List<ReviewAnalytics> reviews = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT rating, age, gender, visitTime, districtNr, name FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
 

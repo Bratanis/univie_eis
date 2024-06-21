@@ -21,92 +21,24 @@
             <button type="submit">Login</button>
         </form>
     </div>
-    <div class="button-container">
-        <button id="ratingsButton">Ratings</button>
-        <button id="spendingsButton">Spending</button>
-        <button id="visitorsButton">Visitors</button>
-        <button id="timesButton">Time</button>
-    </div>
-
-    <div id="events-container" class="events-container">
-        <p>Log in to see the upcoming events in your district.</p>
-    </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        setupRedirectionButtons();
-        fetchEvents();
-    });
-
     function performLogin() {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
-        const userMatch = username.match(/^user(\d+)$/);
-        const passMatch = password.match(/^pass(\d+)$/);
-        //also check if number is between 1 and 23
+        const userMatch = username.match(/^user(2[0-3]|[01]?[0-9])$/);
+        const passMatch = password.match(/^pass(2[0-3]|[01]?[0-9])$/);
 
         if (userMatch && passMatch && userMatch[1] === passMatch[1]) {
-            const newUrl = `${window.location.pathname}?user=${userMatch[1]}`;
-            window.history.pushState({ path: newUrl }, '', newUrl);
-            fetchEvents();
+            if (username === "user0") {
+                window.location.href = "mayor.html";
+                return false;
+            }
+            window.location.href = `district_home.html?user=${userMatch[1]}`;
             return false;
         } else {
             alert("Invalid credentials. Please try again.");
             return false;
-        }
-    }
-
-    function setupRedirectionButtons() {
-        const buttons = document.querySelectorAll('.button-container button');
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                const page = this.id.replace('Button', '');
-                redirectToPage(page);
-            });
-        });
-    }
-
-    function redirectToPage(page) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const user = urlParams.get('user');
-        if (user) {
-            window.location.href = `${page}.html?user=${user}`;
-        } else {
-            window.location.href = `${page}.html`;
-        }
-    }
-
-    async function fetchEvents() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const user = urlParams.get('user');
-
-        if (!user) {
-            document.getElementById('events-container').innerHTML = '<p>Please log in to see the upcoming events in your district.</p>';
-            return;
-        }
-
-        const response = await fetch(`/portal_service/api/events/by-district?districtNr=${user}`);
-        if (response.ok) {
-            const events = await response.json();
-            displayEvents(events);
-        } else {
-            document.getElementById('events-container').innerHTML = '<p>Log in to see the upcoming events in your district.</p>';
-        }
-    }
-
-    function displayEvents(events) {
-        const container = document.getElementById('events-container');
-        container.innerHTML = '<h2>Events in your district</h2>';
-        if (events.length > 0) {
-            const list = document.createElement('ul');
-            events.forEach(event => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${event.name} - ${event.date} (${event.type})`;
-                list.appendChild(listItem);
-            });
-            container.appendChild(list);
-        } else {
-            container.innerHTML += '<p>No upcoming events.</p>';
         }
     }
     </script>

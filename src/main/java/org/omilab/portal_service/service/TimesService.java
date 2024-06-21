@@ -1,7 +1,7 @@
 package org.omilab.portal_service.service;
 
 import org.omilab.portal_service.DatabaseConnection;
-import org.omilab.portal_service.model.SpendingData;
+import org.omilab.portal_service.model.VisitTimeData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,13 +20,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/analytics")
-public class SpendingsService {
+public class TimesService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SpendingsService.class);
+    private static final Logger logger = LoggerFactory.getLogger(TimesService.class);
     private DatabaseConnection dbConnection = new DatabaseConnection();
 
-    @GetMapping(value = "/visitor-spendings", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<SpendingData>> getVisitorSpendings(
+    @GetMapping(value = "/visitor-times", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<VisitTimeData>> getVisitorTimes(
         @RequestParam(required = false) Integer ageMin,
         @RequestParam(required = false) Integer ageMax,
         @RequestParam(required = false) String gender,
@@ -34,12 +34,11 @@ public class SpendingsService {
         @RequestParam(required = false) Integer yearEnd,
         @RequestParam(required = false) Integer districtNr) {
 
-        logger.info("API call with ageMin: {}, ageMax: {}, gender: '{}', yearStart: {}, yearEnd: {}, districtNr: {}",
+        logger.info("API call for visitor times with filters - AgeMin: {}, AgeMax: {}, Gender: '{}', YearStart: {}, YearEnd: {}, DistrictNr: {}",
             ageMin, ageMax, gender, yearStart, yearEnd, districtNr);
-    
-        
-        List<SpendingData> spendings = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT age, name, gender, districtNr, moneySpent, visitTime FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
+
+        List<VisitTimeData> visitTimes = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("SELECT age, name, gender, districtNr, visitTime FROM portal_database.VisitRecord INNER JOIN portal_database.Visitor ON VisitRecord.VisitorID = Visitor.ID INNER JOIN portal_database.Attraction ON VisitRecord.AttractionID = Attraction.ID WHERE 1=1");
 
         // Dynamically append conditions based on provided parameters
         if (ageMin != null && ageMax != null) {
@@ -81,25 +80,23 @@ public class SpendingsService {
 
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                spendings.add(new SpendingData(
+                visitTimes.add(new VisitTimeData(
                     rs.getInt("Age"),
                     rs.getString("Name"),
                     rs.getString("Gender"),
                     rs.getInt("DistrictNr"),
-                    rs.getInt("MoneySpent"),
                     rs.getTimestamp("VisitTime")
-
                 ));
             }
         } catch (Exception e) {
-            logger.error("Failed to fetch visitor spendings", e);
+            logger.error("Failed to fetch visitor times", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
 
-        if (spendings.isEmpty()) {
+        if (visitTimes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(spendings);
+        return ResponseEntity.ok(visitTimes);
     }
 }

@@ -1,7 +1,7 @@
 /* Basic reset */
 body, h1, h2, div, button {
     margin: 0;
-    padding: 0;
+    padding: bottom 5px;
     border: none;
 }
 
@@ -16,12 +16,14 @@ body {
     align-items: center;
     height: 100vh;
     padding-top: 50px;
+    padding: 2%; /* Adds padding to left and right */
+    width: 96%; /* Reduces width to allow border visibility */
+    max-width: 1366px; /* Adjust maximum width as necessary */
     color: #FBCF81; /* Universal text color for better readability */
 }
 
 header {
     text-align: center;
-    padding-top: 20px; /* Adding padding to make the header visible */
     margin-bottom: 20px;
     font-size: 2em; /* Larger font size for visibility */
     font-weight: bold; /* Ensuring the font is bold */
@@ -35,11 +37,11 @@ h2 {
 
 .filters-container {
     background-color: #9E6F50; 
-    padding: 20px 40px; /* Increased padding for aesthetic spacing */
+    padding: 10px 40px; /* Increased padding for aesthetic spacing */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     max-width: 80%; 
-    margin: 0 auto 30px; 
+    margin: 0 auto 20px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -110,6 +112,8 @@ button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color:#9E6F50;
     text-shadow: none;
+    max-height: 350px; /* Adjust based on your specific layout needs */
+    overflow-y: auto; /* Enables vertical scrolling */
 }
 
 .events-container h2 {
@@ -196,4 +200,70 @@ button:hover {
     border: 1px solid #ccc; /* To visually confirm the container's dimensions */
     background-color: #fff; /* Background to ensure visibility */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.district-images {
+    display: flex;          /* Enables flexbox layout */
+    flex-direction: column; /* Stacks items vertically */
+    align-items: center;    /* Horizontally centers items in the container */
+    padding: 10px;
+    margin-top: 10px;
+    background: white; /* Sets a white background for the container */
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1); /* Optional: Adds a subtle shadow for depth */
+    overflow-x: hidden; /* Hides horizontal scroll */
+    height: 550px; /* Sets a fixed height for the images container */
+    overflow-y: scroll; /* Enables vertical scrolling */
+}
+
+#button-container {
+    padding-bottom: 20px; /* Adds space below the button container */
+}
+
+.district-images img {
+    width: 100%;            /* Each image will take the full width of the container */
+    height: auto;           /* Maintains aspect ratio */
+    margin-bottom: 10px;    /* Adds space between images */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Optional shadow for better visibility */
+    border-radius: 10px; /* Gives the images curved edges */
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2%; /* Adds a margin at the bottom */
+}
+
+.main-content, .photo-sidebar {
+    padding-top: 10px; /* Adds space at the top */
+    padding: 10px;
+    background: white;
+    overflow-y: auto;
+}
+
+.data-container {
+    display: flex;
+    margin-top: 20px;
+    padding-top: 20px;
+    max-height: 450px; /* Sets a fixed max height for scrolling */
+    min-width: 800;
+}
+
+.attractions, .events {
+    width: 50%;
+    padding: 10px;
+    min-height: 350px; /* Ensures the container has a minimum height before content loads */
+    max-height: 350px; /* Sets a fixed max height for scrolling */
+    overflow-y: auto; /* Enables vertical scrolling */
+    min-width: 350px; /* Ensures a minimum width for the container */
+}
+
+.white-background {
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* To prevent layout shift during content load */
+#district-description, #attractions-container ul, #events-container ul {
+    min-height: 50px; /* Minimum height to stabilize the layout before content loads */
 }

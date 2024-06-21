@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vienna Tourism Portal - District</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div style="display: flex; align-items: flex-start; justify-content: flex-start; width: 95%;">
+        <button id="logoutButton" style="margin: 10px; padding: 5px 5px; font-size: 17px;" onclick="logout()"> Log out </button>
+    </div> 
+    <header>
+        <h1>District Homepage</h1>
+    </header >
+    <div class="button-container" style="padding-bottom: 10px;">
+        <button id="ratingsButton">Ratings</button>
+        <button id="spendingsButton">Spending</button>
+        <button id="visitorsButton">Visitors</button>
+        <button id="timesButton">Time</button>
+    </div>
+    <div class="content" style="color: #9E6F50;">
+        <div class="main-content">
+            <div id="district-info" class="white-background" style = "min-width: 800px;">
+                <h2>District Description</h2>
+                <p id="district-description">Loading...</p>
+            </div>
+            <div class="data-container">
+                <div id="attractions-container" class="attractions white-background">
+                    <h3>Attractions</h3>
+                    <ul>Loading...</ul>
+                </div>
+                <div id="events-container" class="events white-background">
+                    <h3>Events</h3>
+                    <ul>Loading...</ul>
+                </div>
+            </div>
+        </div>
+        <div class="photo-sidebar">
+            <div class="district-images">
+                <p>New on social media:</p>
+                <img id="district-image-1" src="" alt="District Image 1">
+                <img id="district-image-2" src="" alt="District Image 2">
+                <img id="district-image-3" src="" alt="District Image 3">
+                <img id="district-image-4" src="" alt="District Image 4">
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setupRedirectionButtons();
+            fetchEvents();
+            setDistrictImages();
+            fetchDistrictInfo();
+            fetchAttractions();
+            displayAttractions();
+            displayEvents();
+        });
+        
+        function setupRedirectionButtons() {
+            const buttons = document.querySelectorAll('.button-container button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const page = this.id.replace('Button', '');
+                    redirectToPage(page);
+                });
+            });
+        }
+        
+        function redirectToPage(page) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            if (user) {
+                window.location.href = `${page}.html?user=${user}`;
+            } else {
+                window.location.href = `${page}.html`;
+            }
+        }
+        
+        async function fetchEvents() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            document.getElementById('events-container').innerHTML = '<h2>Events in your district</h2>';
+        
+            const response = await fetch(`/portal_service/api/events/by-district?districtNr=${user}`);
+            if (response.ok) {
+                const events = await response.json();
+                displayEvents(events);
+            } else {
+                document.getElementById('events-container').innerHTML += '<p>No upcoming events.</p>';
+            }
+        }
+
+            function displayEvents(events) {
+            const container = document.getElementById('events-container');
+            container.innerHTML = '<h2>Events in your district</h2>';
+            if (events.length > 0) {
+                const list = document.createElement('ul');
+                events.forEach(event => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${event.name} - ${event.date} (${event.type})`;
+                    list.appendChild(listItem);
+                });
+                container.appendChild(list);
+            } else {
+                container.innerHTML += '<p>No upcoming events.</p>';
+            }
+        }
+
+        
+        function logout() {
+            window.location.href = 'index.html'; // Redirect back to the login page
+        }
+        
+        async function fetchDistrictInfo() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            if (!user) {
+                document.getElementById('district-description').innerText = 'No district information available.';
+                return;
+            }
+        
+            const response = await fetch(`/portal_service/api/districts/info?districtNr=${user}`);
+            if (response.ok) {
+                const data = await response.json();
+                document.getElementById('district-description').innerText = data.description;
+            } else {
+                document.getElementById('district-description').innerText = 'Failed to load district information.';
+            }
+        }
+
+        async function fetchAttractions() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            document.getElementById('attractions-container').innerHTML = '<h2>Attractions in your district</h2>';
+
+            const response = await fetch(`/portal_service/api/attractions/by-district?districtNr=${user}`);
+            if (response.ok) {
+                const attractions = await response.json();
+                displayAttractions(attractions);
+            } else {
+                document.getElementById('attractions-container').innerHTML += '<p>No attractions found.</p>';
+            }
+        }
+
+        function displayAttractions(attractions) {
+            const container = document.getElementById('attractions-container');
+            container.innerHTML = '<h2>Attractions in your district</h2>';
+            if (attractions.length > 0) {
+                const list = document.createElement('ul');
+                attractions.forEach(attraction => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${attraction.name} - ${attraction.address}`;
+                    list.appendChild(listItem);
+                });
+                container.appendChild(list);
+            } else {
+                container.innerHTML += '<p>No attractions found.</p>';
+            }
+        }
+
+        
+        function setDistrictImages() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const user = urlParams.get('user');
+            if (user) {
+                for (let i = 1; i <= 4; i++) {
+                    // Prefix the file path with "photos/" and format it as required
+                    const imagePath = `photos/${user}.${i}.jpg`;
+                    document.getElementById(`district-image-${i}`).src = imagePath;
+                    document.getElementById(`district-image-${i}`).alt = `Image of District ${user}, Part ${i}`;
+                }
+            } else {
+                // If no user is specified, remove image source and update the alt text
+                for (let i = 1; i <= 4; i++) {
+                    document.getElementById(`district-image-${i}`).src = '';
+                    document.getElementById(`district-image-${i}`).alt = 'No district image available';
+                }
+            }
+        }
+
+    </script>
+        
+</body>
+</html>
