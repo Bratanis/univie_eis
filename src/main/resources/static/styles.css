@@ -1,6 +1,6 @@
 /* Basic reset */
 body, h1, h2, div, button {
-    margin: 0;
+    margin: 0 auto;
     padding: bottom 5px;
     border: none;
 }
