@@ -2,13 +2,18 @@
 title: Architecture
 type: description
 ---
+
+# 
+
 # Architecture Components
+
+![UML component diagram](./models/component.svg)
 
 ## 7.1 Backend
 
 ### Spring Boot
 
-The backend will be implemented in Java, and the Java Spring Boot framework will be used as it simplifies the setup of the application with minimal configurations and has some key features such as:
+The backend is implemented in Java, and the Java Spring Boot framework is used as it simplifies the setup of the application with minimal configurations and has some key features such as:
 
 - **Spring Security:** For authentication and authorization mechanisms.
 - **RESTful Services:** Exposing endpoints for frontend interaction.
@@ -16,21 +21,19 @@ The backend will be implemented in Java, and the Java Spring Boot framework will
 
 ## 7.2 Relational Database
 
-We will use a relational database (e.g., MySQL, PostgreSQL, etc.) to store and manage our data. A rough schema has already been outlined in this document to illustrate the database structure.
+The database is inside a docker volume for persistance. This volume is mounted to a MySQL container that is used to manage the data. The ER-diagram below shows the structure of the database:
+![ER-model of DB](./models/erm.svg)
+
 
 ## 7.3 Frontend
 
-The frontend will be built with the following structuring and design components:
+The frontend is built with the following structuring and design components:
 
 - HTML
 - CSS
 - Bootstrap
 
-As for rendering dynamic content and server-side processing, we will use:
-
-### Java Server Pages
-
-Java Server Pages (JSP) enables the development of server-side web applications with the ability to generate dynamic content based on user requests. It simplifies the creation of dynamic web pages through embedding Java code within HTML using tags. JSP was chosen as it is easy to implement and adapt quickly by every member of the team, ensuring that the workflow won’t be slowed down by learning a complex technology.
+the Graphs displayed on the website are renderes using CanvasJS.
 
 
 
