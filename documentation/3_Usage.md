@@ -1,5 +1,4 @@
 ---
-title: Usage
 type: description
 ---
 # Usage 

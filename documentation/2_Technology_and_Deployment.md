@@ -1,5 +1,4 @@
 ---
-title: Technology
 type: description
 ---
 # Technology and Deployment

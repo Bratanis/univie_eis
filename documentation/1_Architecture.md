@@ -1,10 +1,9 @@
 ---
-title: Architecture
 type: description
 ---
 # Architecture Components
 
-![UML component diagram](./models/component.svg)
+![UML component diagram](./models/component.png)
 
 ## 7.1 Backend
 
