@@ -2,9 +2,17 @@
 title: "Service Access"
 type: description
 ---
+# Service Access
+
 From here you can access the portal service for each district directly or login through the home page
 
-[InSights Smart Tourism Dashboard]()
+[InSights Smart Tourism Dashboard](https://eis.dke.univie.ac.at/portal_service/api/index.html)
+
+
+
+
+
+
 
 
 [1. District - Innere Stadt](https://eis.dke.univie.ac.at/portal_service/api/district_home.html?user=1)

@@ -2,9 +2,6 @@
 title: Architecture
 type: description
 ---
-
-# 
-
 # Architecture Components
 
 ![UML component diagram](./models/component.svg)
