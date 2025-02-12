@@ -12,7 +12,7 @@ public_url: https://eis.dke.univie.ac.at/portal_service/api/
 
 # About this project
 This is the solution to the colaborative project I did with Klara Kolarova and Dragomir Marinov for the Enterprise Information Systems subject at the University of Vienna. 
-We had to create a dashboard that could be used by the various local mancicipalities in the city of Vienna to quantify and alanlyse tourist activity and inform future decisions and investments in the tourism sector. For more information please refer to "Smart_tourism_portal_-_Concept.pdf"
+We had to create a dashboard that could be used by the various local mancicipalities in the city of Vienna to quantify and alanlyse tourist activity and inform future decisions and investments in the tourism sector. For more information please refer to "Smart_tourism_portal_-_Concept.pdf". If you want to test the application yourself refer to "Service_Access.md".
 
 
 
